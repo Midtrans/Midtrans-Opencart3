@@ -1,0 +1,59 @@
+{{ header }}
+<div class="container">
+  <div class="row">{{column_left}}
+    
+    {% if column_left and column_right %}
+    {% set classes = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set classes = 'col-sm-9' %}
+    {% else %}
+    {% set classes = 'col-sm-12' %}
+    {% endif %}
+
+    <div id="content" class="{{classes}}">{{ content_top }}
+      
+
+      {% if data.payment_type == "bank_transfer" %}
+        
+        <h1>Payment has not complete yet!</h1>
+        your order has been received but has not been paid yet</br>
+        you place order with <b>{{ data.payment_method }}</b></br>
+        your va number : <b>{{ data.payment_code }}</b></br>
+        For payment instruction click <a href="{{ data.instruction }}" target="blank">here<a></br>
+
+      {% elseif data.payment_type == "echannel" %}
+
+        <h1>Payment has not complete yet!</h1>
+        your order has been received but has not been paid yet</br>
+        you place order with <b>{{ data.payment_method }}</b></br>
+        your payment code and company code : <b>{{ data.payment_code }}</b> and <b>{{ data.company_code }}</b></br>
+        For payment instruction click <a href="{{ data.instruction }}" target="blank">here<a></br>
+
+      {% elseif data.payment_type == "cstore" %}
+
+        <h1>Payment has not complete yet!</h1>
+        your order has been received but has not been paid yet</br>
+        you place order with <b>{{ data.payment_method }}</b></br>
+        your payment code : <b>{{ data.payment_code }}</b></br>
+        For payment instruction click <a href="{{ data.instruction }}" target="blank">here<a></br>
+
+      {% elseif data.payment_type == "xl_tunai" %}
+        <h1>Payment has not complete yet!</h1>
+        your order has been received but has not been paid yet</br>
+        you place order with <b>{{ data.payment_method }}</b></br>
+        {{ data.instruction }}
+
+      {% elseif data.payment_type == "bca_klikpay" %}
+
+        <div class="container">{{content_top}}
+        <h2 class="text-center">Payment Succeed!</h2>
+        <p class="text-center">We've received your payment. Your order will be processed immediately</p>
+
+      {% endif %}
+      
+		      
+	  </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}
