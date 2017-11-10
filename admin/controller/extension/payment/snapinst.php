@@ -83,6 +83,7 @@ class ControllerExtensionPaymentSnapinst extends Controller {
       'payment_snapinst_status',
       'payment_snapinst_display_name',
       'payment_snapinst_environment',
+      'payment_snapinst_merchant_id',
       'payment_snapinst_server_key',
       'payment_snapinst_client_key',
       'payment_snapinst_geo_zone_id',
@@ -145,6 +146,10 @@ class ControllerExtensionPaymentSnapinst extends Controller {
       $this->request->post['snapinst_environment'] = 1;
 
       // check for empty values
+    if (!$this->request->post['payment_snapinst_merchant_id']) {
+       $this->error['merchant_id'] = $this->language->get('error_merchant_id');
+    }
+
     if (!$this->request->post['payment_snapinst_client_key']) {
        $this->error['client_key'] = $this->language->get('error_client_key');
     }

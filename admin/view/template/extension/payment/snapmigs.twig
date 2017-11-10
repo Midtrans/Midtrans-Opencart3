@@ -89,6 +89,19 @@
 		</div>
 	</div>
 	<!-- Environment (v2-specific) -->
+
+	<div class="form-group required sensitive">
+	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+	    <div class="col-sm-3">
+		  <input type="text" name="payment_snapmigs_merchant_id" value="{{ payment_snapmigs_merchant_id }}" placeholder="{{ payment_snapmigs_merchant_id }}" id="input-merchant-id" class="form-control" />
+		</div>
+		<div class="col-sm-3">
+		 {% if error_merchant_id %}
+			<div class="col-sm-3"> {{ error_merchant_id }} </div>
+		 {% endif %}
+		</div>
+	</div>
+	<!-- Merchant id -->
 						
 	<div class="form-group required sensitive">
 	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_client_key }}</label>

@@ -24,6 +24,16 @@ class ControllerExtensionPaymentSnapio extends Controller {
 
   public function index() {
 
+    if ($this->request->server['HTTPS']) {
+      $data['base'] = $this->config->get('config_ssl');
+    } else {
+      $data['base'] = $this->config->get('config_url');
+    }
+
+    $env = $this->config->get('snap_environment') == 'production' ? true : false;
+    $data['mixpanel_key'] = $env == true ? "17253088ed3a39b1e2bd2cbcfeca939a" : "9dcba9b440c831d517e8ff1beff40bd9";
+    $data['merchant_id'] = $this->config->get('payment_snapio_merchant_id');
+
     $data['errors'] = array();
     $data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -217,6 +227,11 @@ class ControllerExtensionPaymentSnapio extends Controller {
     $installment = array();
     $installment_term = array();
     
+    $string = "3,6,9,12,15,18,21,24,27,30,33,36";
+    $terms = explode(",",$string);
+
+    error_log($string);
+    error_log(print_r($terms,TRUE));
 
     $installment_term['offline'] = array(3,6,9,12,18,24,36);
 
@@ -238,8 +253,9 @@ class ControllerExtensionPaymentSnapio extends Controller {
 
     try {
       error_log(print_r($payloads,TRUE));
+      error_log(json_encode($payloads));
       $snapToken = Veritrans_Snap::getSnapToken($payloads);      
-      
+      error_log($snapToken); 
       //$this->response->setOutput($redirUrl);
       $this->response->setOutput($snapToken);
     }

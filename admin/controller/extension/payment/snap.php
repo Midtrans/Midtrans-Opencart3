@@ -33,6 +33,12 @@ class ControllerExtensionPaymentSnap extends Controller {
       $data['error_display_name'] = '';
     }
     
+    if (isset($this->error['merchant_id'])) {
+      $data['error_merchant_id'] = $this->error['merchant_id'];
+    } else {
+      $data['error_merchant_id'] = '';
+    }
+
     if (isset($this->error['server_key'])) {
       $data['error_server_key'] = $this->error['server_key'];
     } else {
@@ -76,6 +82,7 @@ class ControllerExtensionPaymentSnap extends Controller {
     $inputs = array(
       'payment_snap_display_name',
       'payment_snap_environment',
+      'payment_snap_merchant_id',
       'payment_snap_server_key',
       'payment_snap_client_key',
       'payment_snap_oneclick',
@@ -147,6 +154,11 @@ class ControllerExtensionPaymentSnap extends Controller {
       // default values
     if (!$this->request->post['payment_snap_environment'])
       $this->request->post['snap_environment'] = 1;
+
+      // check for empty values
+    if (!$this->request->post['payment_snap_merchant_id']) {
+       $this->error['merchant_id'] = $this->language->get('error_merchant_id');
+    }
 
       // check for empty values
     if (!$this->request->post['payment_snap_client_key']) {

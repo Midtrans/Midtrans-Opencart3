@@ -33,6 +33,12 @@ class ControllerExtensionPaymentSnapbin extends Controller {
       $data['error_display_name'] = '';
     }
     
+    if (isset($this->error['merchant_id'])) {
+      $data['error_merchant_id'] = $this->error['merchant_id'];
+    } else {
+      $data['error_merchant_id'] = '';
+    }
+
     if (isset($this->error['server_key'])) {
       $data['error_server_key'] = $this->error['server_key'];
     } else {
@@ -76,6 +82,7 @@ class ControllerExtensionPaymentSnapbin extends Controller {
     $inputs = array(
       'payment_snapbin_display_name',
       'payment_snapbin_environment',
+      'payment_snapbin_merchant_id',
       'payment_snapbin_server_key',
       'payment_snapbin_client_key',
       'payment_snapbin_number',
@@ -150,6 +157,10 @@ class ControllerExtensionPaymentSnapbin extends Controller {
       $this->request->post['snapbin_environment'] = 1;
 
       // check for empty values
+    if (!$this->request->post['payment_snapbin_merchant_id']) {
+       $this->error['merchant_id'] = $this->language->get('error_merchant_id');
+    }
+    
     if (!$this->request->post['payment_snapbin_client_key']) {
        $this->error['client_key'] = $this->language->get('error_client_key');
     }
