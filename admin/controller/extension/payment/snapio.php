@@ -33,6 +33,12 @@ class ControllerExtensionPaymentSnapio extends Controller {
       $data['error_display_name'] = '';
     }
     
+    if (isset($this->error['merchant_id'])) {
+      $data['error_merchant_id'] = $this->error['merchant_id'];
+    } else {
+      $data['error_merchant_id'] = '';
+    }
+    
     if (isset($this->error['server_key'])) {
       $data['error_server_key'] = $this->error['server_key'];
     } else {
@@ -83,6 +89,7 @@ class ControllerExtensionPaymentSnapio extends Controller {
       'payment_snapio_status',
       'payment_snapio_display_name',
       'payment_snapio_environment',
+      'payment_snapio_merchant_id',
       'payment_snapio_server_key',
       'payment_snapio_client_key',
       'payment_snapio_geo_zone_id',
@@ -145,6 +152,10 @@ class ControllerExtensionPaymentSnapio extends Controller {
       $this->request->post['snapinst_environment'] = 1;
 
       // check for empty values
+    if (!$this->request->post['payment_snapio_merchant_id']) {
+       $this->error['merchant_id'] = $this->language->get('error_merchant_id');
+    }
+
     if (!$this->request->post['payment_snapio_client_key']) {
        $this->error['client_key'] = $this->language->get('error_client_key');
     }

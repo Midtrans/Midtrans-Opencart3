@@ -33,6 +33,12 @@ class ControllerExtensionPaymentSnapinstmigs extends Controller {
       $data['error_display_name'] = '';
     }
     
+    if (isset($this->error['merchant_id'])) {
+      $data['error_merchant_id'] = $this->error['merchant_id'];
+    } else {
+      $data['error_merchant_id'] = '';
+    }
+
     if (isset($this->error['server_key'])) {
       $data['error_server_key'] = $this->error['server_key'];
     } else {
@@ -83,6 +89,7 @@ class ControllerExtensionPaymentSnapinstmigs extends Controller {
       'payment_snapinstmigs_status',
       'payment_snapinstmigs_display_name',
       'payment_snapinstmigs_environment',
+      'payment_snapinstmigs_merchant_id',
       'payment_snapinstmigs_server_key',
       'payment_snapinstmigs_client_key',
       'payment_snapinstmigs_geo_zone_id',
@@ -145,6 +152,10 @@ class ControllerExtensionPaymentSnapinstmigs extends Controller {
       $this->request->post['snapinst_environment'] = 1;
 
       // check for empty values
+    if (!$this->request->post['payment_snapinstmigs_merchant_id']) {
+       $this->error['client_key'] = $this->language->get('error_merchant_id');
+    }
+
     if (!$this->request->post['payment_snapinstmigs_client_key']) {
        $this->error['client_key'] = $this->language->get('error_client_key');
     }

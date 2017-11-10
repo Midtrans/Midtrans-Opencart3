@@ -89,11 +89,24 @@
 		</div>
 	</div>
 	<!-- Environment (v2-specific) -->
+
+	<div class="form-group required sensitive">
+	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+	    <div class="col-sm-3">
+		  <input type="text" name="payment_snapio_merchant_id" value="{{ payment_snapio_merchant_id }}" placeholder="{{ payment_snapio_merchant_id }}" id="input-merchant-id" class="form-control" />
+		</div>
+		<div class="col-sm-3">
+		 {% if error_merchant_id %}
+			<div class="col-sm-3"> {{error_merchant_id}} </div>
+		 {% endif %}
+		</div>
+	</div>
+	<!-- Merchant Id -->
 						
 	<div class="form-group required sensitive">
 	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_client_key }}</label>
 	    <div class="col-sm-3">
-		  <input type="text" name="payment_snapio_client_key" value="{{ payment_snapinst_client_key }}" placeholder="{{ payment_snapio_client_key }}" id="input-merchant-id" class="form-control" />
+		  <input type="text" name="payment_snapio_client_key" value="{{ payment_snapio_client_key }}" placeholder="{{ payment_snapio_client_key }}" id="input-merchant-id" class="form-control" />
 		</div>
 		<div class="col-sm-3">
 		 {% if error_client_key %}

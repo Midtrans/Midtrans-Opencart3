@@ -24,6 +24,16 @@ class ControllerExtensionPaymentSnapinst extends Controller {
 
   public function index() {
 
+    if ($this->request->server['HTTPS']) {
+      $data['base'] = $this->config->get('config_ssl');
+    } else {
+      $data['base'] = $this->config->get('config_url');
+    }
+
+    $env = $this->config->get('snap_environment') == 'production' ? true : false;
+    $data['mixpanel_key'] = $env == true ? "17253088ed3a39b1e2bd2cbcfeca939a" : "9dcba9b440c831d517e8ff1beff40bd9";
+    $data['merchant_id'] = $this->config->get('payment_snapinst_merchant_id');
+
     $data['errors'] = array();
     $data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -34,16 +44,10 @@ class ControllerExtensionPaymentSnapinst extends Controller {
     $data['text_loading'] = $this->language->get('text_loading');
 
   	$data['process_order'] = $this->url->link('extension/payment/snapinst/process_order');
-
-     if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/snapinst.tpl')) {
-        return $this->load->view($this->config->get('config_template') . '/template/payment/snapinst.tpl',$data);
-    } else {
-     if (VERSION > 2.1 ) {
-        return $this->load->view('extension/payment/snapinst', $data);
-      } else {
-        return $this->load->view('default/template/payment/snapinst.tpl', $data);
-      }
-    }
+ 
+    return $this->load->view('extension/payment/snapinst', $data);
+      
+    
 
   }
 

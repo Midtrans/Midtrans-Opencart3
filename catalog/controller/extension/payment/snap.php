@@ -30,6 +30,10 @@ class ControllerExtensionPaymentSnap extends Controller {
       $data['base'] = $this->config->get('config_url');
     }
 
+    $env = $this->config->get('snap_environment') == 'production' ? true : false;
+    $data['mixpanel_key'] = $env == true ? "17253088ed3a39b1e2bd2cbcfeca939a" : "9dcba9b440c831d517e8ff1beff40bd9";
+    $data['merchant_id'] = $this->config->get('payment_snap_merchant_id');
+
     $data['errors'] = array();
     $data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -80,6 +84,8 @@ class ControllerExtensionPaymentSnap extends Controller {
     $transaction_details                 = array();
     $transaction_details['order_id']     = $this->session->data['order_id'];
     $transaction_details['gross_amount'] = $order_info['total'];
+
+    error_log('orderinfo_total = '.$order_info['total']);
 
     $billing_address                 = array();
     $billing_address['first_name']   = $order_info['payment_firstname'];
@@ -198,6 +204,8 @@ class ControllerExtensionPaymentSnap extends Controller {
     foreach ($item_details as $item) {
       $total_price += $item['price'] * $item['quantity'];
     }
+
+    error_log('total_price = '.$total_price);
 
     if ($total_price != $transaction_details['gross_amount']) {
       $coupon_item = array(
