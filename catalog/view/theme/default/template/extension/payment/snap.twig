@@ -107,6 +107,7 @@ mixpanel.init( "{{ mixpanel_key }}" );
 
       function trackResult(token, merchant_id, plugin_name, status, result) {
           var eventNames = {
+            pay: 'pg-pay',
             success: 'pg-success',
             pending: 'pg-pending',
             error: 'pg-error',
@@ -138,6 +139,8 @@ mixpanel.init( "{{ mixpanel_key }}" );
           //resultType.innerHTML = type;
           //resultData.innerHTML = JSON.stringify(data);
         }
+
+        trackResult(data, merch_id, 'oc3_fullpayment', 'pay', null);
 
         snap.pay(data, {
           

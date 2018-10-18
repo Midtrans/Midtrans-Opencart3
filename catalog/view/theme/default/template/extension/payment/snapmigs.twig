@@ -103,6 +103,7 @@ mixpanel.init( "{{ mixpanel_key }}" );
         //location = data;
         function trackResult(token, merchant_id, plugin_name, status, result) {
           var eventNames = {
+            pay: 'pg-pay',
             success: 'pg-success',
             pending: 'pg-pending',
             error: 'pg-error',
@@ -134,6 +135,8 @@ mixpanel.init( "{{ mixpanel_key }}" );
           //resultType.innerHTML = type;
           //resultData.innerHTML = JSON.stringify(data);
         }
+
+        trackResult(data, merch_id, 'oc_3_installment_offline', 'pay', null);
 
         snap.pay(data, {
           
