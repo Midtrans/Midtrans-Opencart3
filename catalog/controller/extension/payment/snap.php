@@ -392,24 +392,29 @@ class ControllerExtensionPaymentSnap extends Controller {
               
             } 
           if(isset($response->va_numbers[0]->bank)){
-
-            $data['data']= array(
-            'payment_type' => $payment_type,  
-            'payment_method' => "BCA Virtual Account",
-            'instruction' => $base_url . $response->pdf_url,
-            'payment_code' => $response->bca_va_number,
-            );         
-              
+            if ($response->va_numbers[0]->bank == "bca") {
+              $data['data']= array(
+                'payment_type' => $payment_type,  
+                'payment_method' => "BCA Virtual Account",
+                'instruction' => $base_url . $response->pdf_url,
+                'payment_code' => $response->bca_va_number,
+              );
+            } else {
+              $data['data']= array(
+                'payment_type' => $payment_type,  
+                'payment_method' => "BNI Virtual Account",
+                'instruction' => $base_url . $response->pdf_url,
+                'payment_code' => $response->va_numbers[1],
+              );
+            }
           }
           else{
-
             $data['data']= array(
-            'payment_type' => $payment_type,
-            'payment_method' => "Permata Virtual Account",
-            'instruction' => $base_url . $response->pdf_url,
-            'payment_code' => $response->permata_va_number,
-            );         
-              
+              'payment_type' => $payment_type,
+              'payment_method' => "Permata Virtual Account",
+              'instruction' => $base_url . $response->pdf_url,
+              'payment_code' => $response->permata_va_number,
+            );
           }
 
             break;
