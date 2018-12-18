@@ -404,7 +404,7 @@ class ControllerExtensionPaymentSnap extends Controller {
                 'payment_type' => $payment_type,  
                 'payment_method' => "BNI Virtual Account",
                 'instruction' => $base_url . $response->pdf_url,
-                'payment_code' => $response->va_numbers[1],
+                'payment_code' => $response->va_numbers[0]->va_number,
               );
             }
           }
