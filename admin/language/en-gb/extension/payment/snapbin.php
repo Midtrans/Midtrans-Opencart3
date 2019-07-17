@@ -1,17 +1,17 @@
 <?php
 // Heading
-$_['heading_title']      = 'Snapbin';
+$_['heading_title']      = 'Midtrans Credit Card Bins';
 
 // Text
 $_['text_extension']	 = 'Extensions';
 $_['text_payment']       = 'Payment';
-$_['text_success']       = 'Success: You have modified Snap configuration!';
-$_['text_snapbin']     = '<a href="https://midtrans.com" target="_blank"><img src="view/image/payment/midtrans.png" width="120px" alt="Midtrans" title="Snap" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_success']       = 'Success: You have modified Midtrans Credit Card Bins configuration!';
+$_['text_snapbin']     = '<a href="https://midtrans.com" target="_blank"><img src="view/image/payment/midtrans.png" width="120px" alt="Midtrans" title="Midtrans" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_live']          = 'production';
 $_['text_sandbox']       = 'sandbox';
 $_['text_successful']    = 'Always Successful';
 $_['text_fail']          = 'Always Fail';
-$_['text_edit']          = 'Configure Midtrans Snap';
+$_['text_edit']          = 'Configure Midtrans Credit Card Bins';
 
 // Entry
 $_['entry_environment']  = 'Environment'; // v2 API only
@@ -20,20 +20,26 @@ $_['entry_client_key']   = 'Client Key'; // v2 API only
 $_['entry_server_key']   = 'Server Key'; // v2 API only
 $_['entry_bin_number']   = 'Bin Number'; // v2 API only
 $_['entry_order_status'] = 'Order Status';
-$_['entry_oneclick']     = 'One click';
+$_['entry_savecard']     = 'Save Card';
 $_['entry_geo_zone']     = 'Geo Zone';
 $_['entry_status']       = 'Status';
 $_['entry_sort_order']   = 'Sort Order:';
-$_['entry_expiry']   	 = 'Custom Expire';
 $_['entry_custom_field'] = 'Custom Field';
 $_['entry_currency_conversion'] = 'Currency conversion to IDR';
 $_['entry_snapbin_success_mapping'] = 'Map Payment Success Status to Order Status:';
 $_['entry_snapbin_challenge_mapping'] = 'Map Payment Challenge Status to Order Status:';
 $_['entry_snapbin_failure_mapping'] = 'Map Payment Failure Status to Order Status:';
-$_['entry_display_name'] = 'Display name:';
+$_['entry_display_name'] = 'Display name';
+$_['entry_acq_bank']	 = 'Acquiring Bank';
+$_['entry_3ds'] = '3D Secure';
+
+// Help
+$_['help_savecard'] = 'This will allow your customer to save their card on the payment popup, for faster payment flow on the following purchase.';
+$_['help_custom_field'] = 'This will allow you to set custom fields that will be displayed on Midtrans dashboard.';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify Snapbin!';
+$_['error_merchant_id']	 = 'Merchant Id is required!';
 $_['error_client_key']   = 'Client Key is required!';
 $_['error_server_key']   = 'Server Key is required!';
 $_['error_currency_conversion'] = 'Currency conversion rate is required when IDR currency is not installed in the system!';

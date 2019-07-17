@@ -37,7 +37,7 @@
 	 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-midtrans-snap" class="form-horizontal">
 	 <div class="form-group">
       <label class="col-sm-2 control-label" for="input-mode"> {{ entry_status }} </label>
-		<div class="col-sm-3">
+		<div class="col-sm-10">
 		 <select name="payment_snap_status" id="input-status" class="form-control">
 		   
 		    {% if payment_snap_status %}
@@ -54,21 +54,30 @@
 	<!-- Status -->
 
 	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_display_name }}</label>
-	    <div class="col-sm-3">
-		  <input type="text" name="payment_snap_display_name" value="{{ payment_snap_display_name }}" placeholder="{{ payment_snap_display_name }}" id="input-merchant-id" class="form-control" />
-		</div>
-		<div class="col-sm-3">
+	  <label class="col-sm-2 control-label" for="input-display-name">{{ entry_display_name }}</label>
+	    <div class="col-sm-10">
+		  <input type="text" name="payment_snap_display_name" value="{{ payment_snap_display_name }}" placeholder="{{ payment_snap_display_name }}" id="input-display-name" class="form-control" />
 		 {% if error_display_name %}
-			<div class="col-sm-3"> {{ error_display_name }} </div>
+			<div class="text-danger"> {{error_display_name}} </div>
 		 {% endif %}
 		</div>
 	</div>
 	<!-- Display name -->
 
-	<div class="form-group sensitive required">
+	<div class="form-group required sensitive">
+	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+	    <div class="col-sm-10">
+		  <input type="text" name="payment_snap_merchant_id" value="{{ payment_snap_merchant_id }}" placeholder="{{ payment_snap_merchant_id }}" id="input-merchant-id" class="form-control" />
+		 {% if error_merchant_id %}
+			<div class="text-danger"> {{error_merchant_id}} </div>
+		 {% endif %}
+		</div>
+	</div>
+	<!-- Merchant Id -->
+
+	<div class="form-group sensitive">
 	  <label class="col-sm-2 control-label" for="input-mode">{{ entry_environment }}</label>
-	    <div class="col-sm-3">
+	    <div class="col-sm-10">
 		  <select name="payment_snap_environment" id="input-mode" class="form-control">
 		    {% if payment_snap_environment == 'sandbox' %}
                 <option value="sandbox" selected="selected">{{ text_sandbox }}</option>
@@ -82,60 +91,35 @@
             {% endif %}
 		  </select>
 		</div>
-		<div class="col-sm-3">
-		 {% if error_environment %}
-		  <div class="col-sm-3"> {{ error_environment }} </div>
-		{% endif %}
-		</div>
 	</div>
 	<!-- Environment (v2-specific) -->
-
-	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
-	    <div class="col-sm-3">
-		  <input type="text" name="payment_snap_merchant_id" value="{{ payment_snap_merchant_id }}" placeholder="{{ payment_snap_merchant_id }}" id="input-merchant-id" class="form-control" />
-		</div>
-		<div class="col-sm-3">
-		 {% if error_merchant_id %}
-			<div class="col-sm-3"> {{error_merchant_id}} </div>
-		 {% endif %}
-		</div>
-	</div>
-	<!-- Merchant Id -->
-
-
 						
 	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_client_key }}</label>
-	    <div class="col-sm-3">
-		  <input type="text" name="payment_snap_client_key" value="{{ payment_snap_client_key }}" placeholder="{{ payment_snap_client_key }}" id="input-merchant-id" class="form-control" />
-		</div>
-		<div class="col-sm-3">
+	  <label class="col-sm-2 control-label" for="input-client-key">{{ entry_client_key }}</label>
+	    <div class="col-sm-10">
+		  <input type="text" name="payment_snap_client_key" value="{{ payment_snap_client_key }}" placeholder="{{ payment_snap_client_key }}" id="input-client-key" class="form-control" />
 		 {% if error_client_key %}
-			<div class="col-sm-3"> {{error_client_key}} </div>
+			<div class="text-danger"> {{error_client_key}} </div>
 		 {% endif %}
 		</div>
 	</div>
 	<!-- Client Key (v2-specific) -->
 
-
 	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_server_key }}</label>
-		<div class="col-sm-3">
-		  <input type="text" name="payment_snap_server_key" value="{{ payment_snap_server_key }}" placeholder="{{ payment_snap_server_key }}" id="input-merchant-id" class="form-control" />
-		</div>
-		<div class="col-sm-3">
-		 {% if error_server_key %}
-		   <div class="col-sm-3"> {{ error_server_key }} ?> </div>
-		 {% endif %}
+	  <label class="col-sm-2 control-label" for="input-server-key">{{ entry_server_key }}</label>
+		<div class="col-sm-10">
+		  <input type="text" name="payment_snap_server_key" value="{{ payment_snap_server_key }}" placeholder="{{ payment_snap_server_key }}" id="input-server-key" class="form-control" />
+		  {% if error_server_key %}
+		  	<div class="text-danger"> {{error_server_key}} </div>
+		  {% endif %}
 		</div>
 	</div>
 	<!-- Server Key (v2-specific) -->
 
-	<div class="form-group required sensitive">
-      <label class="col-sm-2 control-label" for="input-mode">{{entry_oneclick}}</label>
-		<div class="col-sm-3">
-		 <select name="payment_snap_oneclick" id="input-mode" class="form-control">
+	<div class="form-group sensitive">
+      <label class="col-sm-2 control-label" for="input-save-card"><span data-toggle="tooltip" title="{{ help_savecard }}">{{ entry_savecard }}</span></label>
+		<div class="col-sm-10">
+		 <select name="payment_snap_oneclick" id="input-save-card" class="form-control">
 		   {% if payment_snap_oneclick %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
@@ -145,17 +129,19 @@
            {% endif %}
 		  </select>
 		</div>
+		<div class="col-sm-2"></div>
+		<div class="col-sm-10"><span>Leave it disabled if you are not sure!</span></div>
 	 </div>
-	 <!-- One Click -->
+	 <!-- Save Card -->
 
-	 <div class="form-group v2_settings sensitive">
-	  <label class="col-sm-2 control-label" for="input-mode">{{ entry_expiry }}</label>
+	 <div class="form-group sensitive">
+	  <label class="col-sm-2 control-label" for="input-expiry"><span data-toggle="tooltip" title="{{ help_expiry }}">{{ entry_expiry }}</span></label>
 	    <div class="col-sm-3">
-			<input type="text" name="payment_snap_expiry_duration" placeholder="filled with number"  value="{{ payment_snap_expiry_duration }}" id="input-merchant-id" class="form-control" />
+			<input type="text" name="payment_snap_expiry_duration" placeholder="filled with number"  value="{{ payment_snap_expiry_duration }}" id="input-expiry" class="form-control" />
+			<span>Leave it blank for default.</span>
 		</div>
-
 	    <div class="col-sm-3">
-		  <select name="payment_snap_expiry_unit" id="input-mode" class="form-control">
+		  <select name="payment_snap_expiry_unit" id="input-expiry" class="form-control">
 		  {% for expire in expiry  %}
 		  {% if expire.unit == payment_snap_expiry_unit %}
 		  <option value="{{ expire.unit }}" selected="selected">{{ expire.unit }}</option>
@@ -166,14 +152,12 @@
 		  </select>
 		</div>
 	</div>
-	<!-- custom expiry -->
-	 
+	<!-- Custom Expiry -->
 
-	<div class="form-group required">
-	 <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_custom_field }}</label>
+	<div class="form-group">
+	 <label class="col-sm-2 control-label" for="input-custom-field"><span data-toggle="tooltip" title="{{ help_custom_field }}">{{ entry_custom_field }}</span></label>
 	  <div class="col-sm-3">
 	   <input type="text" name="payment_snap_custom_field1" value="{{ payment_snap_custom_field1 }}" placeholder="{{ payment_snap_custom_field1 }}" class="form-control" />
-	   <span> 'This will allow you to set custom fields that will be displayed on Midtrans dashboard.</span>
 	  </div>
 	  <div class="col-sm-3">
 	   <input type="text" name="payment_snap_custom_field2" value="{{ payment_snap_custom_field2 }}" placeholder="{{ payment_snap_custom_field2 }}" class="form-control" />
@@ -181,28 +165,26 @@
 	  <div class="col-sm-3">
 	   <input type="text" name="payment_snap_custom_field3" value="{{ payment_snap_custom_field3 }}" placeholder="{{ payment_snap_custom_field3 }}" class="form-control" />
 	  </div>
-	  <div class="col-sm-12">
-	  </div>
+	  <div class="col-sm-2"></div><div class="col-sm-10"><span>Leave it blank if you are not sure!</span></div>
 	</div>
-	<!-- custom field -->
+	<!-- Custom Field -->
 
 	<div class="form-group required">
-	 <label class="col-sm-2 control-label" for="input-merchant-id">{{entry_currency_conversion}}</label>
-	  <div class="col-sm-3">
+	 <label class="col-sm-2 control-label" for="input-currency">{{entry_currency_conversion}}</label>
+	  <div class="col-sm-10">
 	   <input type="text" name="payment_snap_currency_conversion" value="{{ payment_snap_currency_conversion }}" placeholder="{{ payment_snap_currency_conversion }}" class="form-control" />
-		<span>Set to 1 if your default currency is IDR</span>
+		<span>Set to 1 if your default currency is IDR.</span>
 	  </div>
-	  <div class="col-sm-3">
+	  <div class="col-sm-2"></div>
 		{%if error_currency_conversion %}
-		<div class="col-sm-3">{{ error_currency_conversion }}</div>
+		<div class="col-sm-3"><font color="red">{{ error_currency_conversion }}</font></div>
 		{% endif %}
-	  </div>
 	</div>
 	<!-- Currency -->
 
 	<div class="form-group">
-	 <label class="col-sm-2 control-label" for="input-merchant-id">{{entry_geo_zone}}</label>
-	  <div class="col-sm-3">
+	 <label class="col-sm-2 control-label" for="input-geo-zone">{{entry_geo_zone}}</label>
+	  <div class="col-sm-10">
 	   <select name="payment_snap_geo_zone_id"  class="form-control">
 		<option value="0">{{ text_all_zones }}</option>
 		{% for geo_zone in geo_zones  %}
@@ -218,15 +200,12 @@
 	<!-- Geo Zone -->
 
 	<div class="form-group">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_sort_order }}</label>
-		<div class="col-sm-1">
+	  <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+		<div class="col-sm-2">
 		 <input size="1" type="text" name="payment_snap_sort_order" value="{{ payment_snap_sort_order }}" placeholder="{{ payment_snap_sort_order }}" class="form-control" />
 		</div>
 	</div>
-	
-	<div>
-	 <center><font size="1">version 1.0</font></center>
-	</div>
+	<!-- Sort Order -->
 
    </form>
   </div>

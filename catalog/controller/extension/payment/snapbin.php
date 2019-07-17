@@ -17,7 +17,7 @@ status code
 16 voided
 */
 
-
+require_once(dirname(__FILE__) . '/snap_midtrans_version.php');
 require_once(DIR_SYSTEM . 'library/veritrans-php/Veritrans.php');
 
 class ControllerExtensionPaymentSnapbin extends Controller {
@@ -44,7 +44,10 @@ class ControllerExtensionPaymentSnapbin extends Controller {
     $data['text_loading'] = $this->language->get('text_loading');
 
   	$data['process_order'] = $this->url->link('extension/payment/snapbin/process_order');
- 
+
+    $data['opencart_version'] = VERSION;
+    $data['mtplugin_version'] = OC3_MIDTRANS_PLUGIN_VERSION;
+
     return $this->load->view('extension/payment/snapbin', $data);
 
   }
@@ -206,19 +209,24 @@ class ControllerExtensionPaymentSnapbin extends Controller {
 
     $serverKey = $this->config->get('payment_snapbin_server_key');
     Veritrans_Config::$serverKey = $serverKey;
-
-    Veritrans_Config::$isProduction =
-        $this->config->get('payment_snapbin_environment') == 'production'
-        ? true : false;
-
-    Veritrans_Config::$is3ds = true;
-
+    Veritrans_Config::$isProduction = $this->config->get('payment_snapbin_environment') == 'production' ? true : false;
+    Veritrans_Config::$is3ds = $this->config->get('payment_snapbin_3d_secure') == 1 ? false : true;
     Veritrans_Config::$isSanitized = true;
 
-    $bin = explode(',', $this->config->get('payment_snapbin_number'));
-    error_log($this->config->get('payment_snapbin_number'));
-    $credit_card['whitelist_bins'] = $bin;
-    $credit_card['secure'] = true;
+    if ($this->config->get('payment_snapbin_number') !== '') {
+      $bin = explode(',', $this->config->get('payment_snapbin_number'));
+      $credit_card['whitelist_bins'] = $bin;
+    }
+
+    if($this->config->get('payment_snapbin_oneclick') == 1){
+      $credit_card['save_card'] = true;
+      $payloads['credit_card'] = $credit_card;
+      $payloads['user_id'] = crypt( $order_info['email'], $serverKey );
+    }
+
+    if ($this->config->get('payment_snapbin_acq_bank') !== '') {
+      $credit_card['bank'] = $this->config->get('payment_snapbin_acq_bank');
+    }
 
     $payloads = array();
     $payloads['transaction_details'] = $transaction_details;
@@ -227,16 +235,15 @@ class ControllerExtensionPaymentSnapbin extends Controller {
     $payloads['enabled_payments']    = array('credit_card');
     $payloads['credit_card'] = $credit_card;
 
-    if($this->config->get('payment_snapbin_oneclick') == 1){
-      $credit_card['save_card'] = true;
-      $payloads['credit_card'] = $credit_card;
-      $payloads['user_id'] = crypt( $order_info['email'], $serverKey );
-    }
+    if(!empty($this->config->get('payment_snapbin_custom_field1'))){$payloads['custom_field1'] = $this->config->get('payment_snapbin_custom_field1');}
+    if(!empty($this->config->get('payment_snapbin_custom_field2'))){$payloads['custom_field2'] = $this->config->get('payment_snapbin_custom_field2');}
+    if(!empty($this->config->get('payment_snapbin_custom_field3'))){ $payloads['custom_field3'] = $this->config->get('payment_snapbin_custom_field3');}
 
+      // error_log(print_r($payloads,TRUE));
     try {
       $snapToken = Veritrans_Snap::getSnapToken($payloads);      
-      
       //$this->response->setOutput($redirUrl);
+      // $this->cart->clear();
       $this->response->setOutput($snapToken);
     }
     catch (Exception $e) {

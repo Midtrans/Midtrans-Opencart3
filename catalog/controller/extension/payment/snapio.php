@@ -17,7 +17,7 @@ status code
 16 voided
 */
 
-
+require_once(dirname(__FILE__) . '/snap_midtrans_version.php');
 require_once(DIR_SYSTEM . 'library/veritrans-php/Veritrans.php');
 
 class ControllerExtensionPaymentSnapio extends Controller {
@@ -44,7 +44,10 @@ class ControllerExtensionPaymentSnapio extends Controller {
     $data['text_loading'] = $this->language->get('text_loading');
 
   	$data['process_order'] = $this->url->link('extension/payment/snapio/process_order');
-     
+
+    $data['opencart_version'] = VERSION;
+    $data['mtplugin_version'] = OC3_MIDTRANS_PLUGIN_VERSION;
+
     return $this->load->view('extension/payment/snapio', $data);
 
   }
@@ -76,7 +79,7 @@ class ControllerExtensionPaymentSnapio extends Controller {
     $transaction_details['order_id']     = $this->session->data['order_id'];
     $transaction_details['gross_amount'] = $order_info['total'];
 
-    error_log('orderinfo_total = '.$order_info['total']);
+    // error_log('orderinfo_total = '.$order_info['total']);
 
     $billing_address                 = array();
     $billing_address['first_name']   = $order_info['payment_firstname'];
@@ -197,7 +200,7 @@ class ControllerExtensionPaymentSnapio extends Controller {
       $total_price += $item['price'] * $item['quantity'];
     }
 
-    error_log('total_price = '.$total_price);
+    // error_log('total_price = '.$total_price);
 
     if ($total_price != $transaction_details['gross_amount']) {
       $coupon_item = array(
@@ -211,34 +214,13 @@ class ControllerExtensionPaymentSnapio extends Controller {
 
     Veritrans_Config::$serverKey = $this->config->get('payment_snapio_server_key');
 
-    error_log(Veritrans_Config::$serverKey);    
-
     Veritrans_Config::$isProduction =
         $this->config->get('payment_snapio_environment') == 'production'
         ? true : false;
 
-    error_log($this->config->get('payment_snapio_environment'));
-
     Veritrans_Config::$is3ds = true;
 
     Veritrans_Config::$isSanitized = true;
-
-    $credit_card['save_card'] = true;
-    $installment = array();
-    $installment_term = array();
-    
-    $string = "3,6,9,12,15,18,21,24,27,30,33,36";
-    $terms = explode(",",$string);
-
-    error_log($string);
-    error_log(print_r($terms,TRUE));
-
-    $installment_term['offline'] = array(3,6,9,12,18,24,36);
-
-    $installment['required'] = TRUE;
-    $installment['terms'] = $installment_term;    
-
-    $credit_card['installment'] = $installment;
 
     $payloads = array();
     $payloads['transaction_details'] = $transaction_details;
@@ -247,15 +229,37 @@ class ControllerExtensionPaymentSnapio extends Controller {
     $payloads['enabled_payments']    = array('credit_card');
     
     if ($transaction_details['gross_amount'] >= $this->config->get('payment_snapio_min_txn')){
-      $payloads['credit_card'] = $credit_card;
+      // Build bank & terms array
+      $termsStr = explode(',', $this->config->get('payment_snapio_installment_term'));
+      $terms = array();
+      foreach ($termsStr as $termStr) {
+        $terms[] = (int)$termStr;
+      };
+          
+      if ($this->config->get('payment_snapio_acq_bank') !== '') {
+        $payloads['credit_card']['bank'] = $this->config->get('payment_snapio_acq_bank');
+      }
+      // Add installment param
+      $payloads['credit_card']['installment']['required'] = true;
+      $payloads['credit_card']['installment']['terms'] = 
+        array(
+          'offline' => $terms
+        );
     }
-  
+
+    if ($this->config->get('payment_snapio_number') !== '') {
+      $bin = explode(',', $this->config->get('payment_snapio_number'));
+      $payloads['credit_card']['whitelist_bins'] = $bin;
+    }
+
+    if(!empty($this->config->get('payment_snapio_custom_field1'))){$payloads['custom_field1'] = $this->config->get('payment_snapio_custom_field1');}
+    if(!empty($this->config->get('payment_snapio_custom_field2'))){$payloads['custom_field2'] = $this->config->get('payment_snapio_custom_field2');}
+    if(!empty($this->config->get('payment_snapio_custom_field3'))){ $payloads['custom_field3'] = $this->config->get('payment_snapio_custom_field3');}
 
     try {
-      error_log(print_r($payloads,TRUE));
-      error_log(json_encode($payloads));
-      $snapToken = Veritrans_Snap::getSnapToken($payloads);      
-      error_log($snapToken); 
+      // error_log(print_r($payloads,TRUE));
+      $snapToken = Veritrans_Snap::getSnapToken($payloads);
+      // $this->cart->clear();    
       //$this->response->setOutput($redirUrl);
       $this->response->setOutput($snapToken);
     }

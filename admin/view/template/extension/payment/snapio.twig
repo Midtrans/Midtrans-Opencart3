@@ -37,7 +37,7 @@
 	 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-midtrans-snap" class="form-horizontal">
 	 <div class="form-group">
       <label class="col-sm-2 control-label" for="input-mode"> {{ entry_status }} </label>
-		<div class="col-sm-3">
+		<div class="col-sm-10">
 		 <select name="payment_snapio_status" id="input-status" class="form-control">
 		   
 		    {% if payment_snapio_status %}
@@ -54,21 +54,30 @@
 	<!-- Status -->
 
 	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_display_name }}</label>
-	    <div class="col-sm-3">
-		  <input type="text" name="payment_snapio_display_name" value="{{ payment_snapio_display_name }}" placeholder="{{ payment_snapio_display_name }}" id="input-merchant-id" class="form-control" />
-		</div>
-		<div class="col-sm-3">
+	  <label class="col-sm-2 control-label" for="input-display-name">{{ entry_display_name }}</label>
+	    <div class="col-sm-10">
+		  <input type="text" name="payment_snapio_display_name" value="{{ payment_snapio_display_name }}" placeholder="{{ payment_snapio_display_name }}" id="input-display-name" class="form-control" />
 		 {% if error_display_name %}
-			<div class="col-sm-3"> {{ error_display_name }} </div>
-		 {% endif %}
+			<div class="text-danger"> {{ error_display_name }} </div>
+		 {% endif %}		
 		</div>
 	</div>
 	<!-- Display name -->
 
-	<div class="form-group sensitive required">
+	<div class="form-group required sensitive">
+	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+	    <div class="col-sm-10">
+		  <input type="text" name="payment_snapio_merchant_id" value="{{ payment_snapio_merchant_id }}" placeholder="{{ payment_snapio_merchant_id }}" id="input-merchant-id" class="form-control" />
+		 {% if error_merchant_id %}
+			<div class="text-danger"> {{ error_merchant_id }} </div>
+		 {% endif %}
+		</div>
+	</div>
+	<!-- Merchant Id -->
+
+	<div class="form-group sensitive">
 	  <label class="col-sm-2 control-label" for="input-mode">{{ entry_environment }}</label>
-	    <div class="col-sm-3">
+	    <div class="col-sm-10">
 		  <select name="payment_snapio_environment" id="input-mode" class="form-control">
 		    {% if payment_snapio_environment == 'sandbox' %}
                 <option value="sandbox" selected="selected">{{ text_sandbox }}</option>
@@ -82,73 +91,76 @@
             {% endif %}
 		  </select>
 		</div>
-		<div class="col-sm-3">
-		 {% if error_environment %}
-		  <div class="col-sm-3"> {{ error_environment }} </div>
-		{% endif %}
-		</div>
 	</div>
 	<!-- Environment (v2-specific) -->
-
-	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
-	    <div class="col-sm-3">
-		  <input type="text" name="payment_snapio_merchant_id" value="{{ payment_snapio_merchant_id }}" placeholder="{{ payment_snapio_merchant_id }}" id="input-merchant-id" class="form-control" />
-		</div>
-		<div class="col-sm-3">
-		 {% if error_merchant_id %}
-			<div class="col-sm-3"> {{error_merchant_id}} </div>
-		 {% endif %}
-		</div>
-	</div>
-	<!-- Merchant Id -->
 						
 	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_client_key }}</label>
-	    <div class="col-sm-3">
-		  <input type="text" name="payment_snapio_client_key" value="{{ payment_snapio_client_key }}" placeholder="{{ payment_snapio_client_key }}" id="input-merchant-id" class="form-control" />
-		</div>
-		<div class="col-sm-3">
+	  <label class="col-sm-2 control-label" for="input-client-key">{{ entry_client_key }}</label>
+	    <div class="col-sm-10">
+		  <input type="text" name="payment_snapio_client_key" value="{{ payment_snapio_client_key }}" placeholder="{{ payment_snapio_client_key }}" id="input-client-key" class="form-control" />
 		 {% if error_client_key %}
-			<div class="col-sm-3"> {{error_client_key}} </div>
+			<div class="text-danger"> {{ error_client_key }} </div>
 		 {% endif %}
 		</div>
 	</div>
 	<!-- Client Key (v2-specific) -->
 
-
 	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_server_key }}</label>
-		<div class="col-sm-3">
-		  <input type="text" name="payment_snapio_server_key" value="{{ payment_snapio_server_key }}" placeholder="{{ payment_snapio_server_key }}" id="input-merchant-id" class="form-control" />
-		</div>
-		<div class="col-sm-3">
-		 {% if error_server_key %}
-		   <div class="col-sm-3"> {{ error_server_key }} ?> </div>
+	  <label class="col-sm-2 control-label" for="input-server-key">{{ entry_server_key }}</label>
+		<div class="col-sm-10">
+		  <input type="text" name="payment_snapio_server_key" value="{{ payment_snapio_server_key }}" placeholder="{{ payment_snapio_server_key }}" id="input-server-key" class="form-control" />
+		 {% if error_display_name %}
+			<div class="text-danger"> {{ error_server_key }} </div>
 		 {% endif %}
 		</div>
 	</div>
-	<!-- Server Key (v2-specific) --> 
+	<!-- Server Key (v2-specific) -->
+
+	<div class="form-group">
+	 <label class="col-sm-2 control-label" for="input-bank">{{entry_acq_bank}}</label>
+	  <div class="col-sm-10">
+	   <input type="text" name="payment_snapio_acq_bank" value="{{ payment_snapio_acq_bank }}" placeholder="{{ payment_snapio_acq_bank }}" class="form-control" />
+	  </div>
+	  <div class="col-sm-2"></div>
+	  <div class="col-sm-10"><span>Input the desired acquiring bank. e.g: bni. <br>Leave blank if you are not sure!</span></div>
+	</div>
+	<!-- Acquiring Bank -->
+
+	<div class="form-group">
+	 <label class="col-sm-2 control-label" for="input-terms">{{entry_installment_term}}</label>
+	  <div class="col-sm-10">
+	   <input type="text" name="payment_snapio_installment_term" value="{{ payment_snapio_installment_term }}" placeholder="{{ payment_snapio_installment_term }}" class="form-control" />
+	  </div>
+	  <div class="col-sm-2"></div>
+	  <div class="col-sm-10"><span>Input the desired Installment Terms. Separate with coma. e.g: 3,6,12</span></div>
+	</div>
+	<!-- Installment Terms -->
 
 	<div class="form-group required">
-	 <label class="col-sm-2 control-label" for="input-merchant-id">{{entry_min_txn}}</label>
-	  <div class="col-sm-3">
+	 <label class="col-sm-2 control-label" for="input-min-txn"><span data-toggle="tooltip" title="{{ help_min }}">{{ entry_min_txn }}</span></label>
+	  <div class="col-sm-10">
 	   <input type="text" name="payment_snapio_min_txn" value="{{ payment_snapio_min_txn }}" placeholder="{{ payment_snapio_min_txn }}" class="form-control" />
-		<span>minimum amount of transaction</span>
-	  </div>
-	  <div class="col-sm-3">
-		{%if error_min_txn %}
-		<div class="col-sm-3">{{ error_min_txn }}</div>
-		{% endif %}
+		 {% if error_min_txn %}
+			<div class="text-danger"> {{ error_min_txn }} </div>
+		 {% endif %}
 	  </div>
 	</div>
-	<!-- min txn -->
+	<!-- Min Txn -->
 
-	<div class="form-group required">
-	 <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_custom_field }}</label>
+	<div class="form-group">
+	 <label class="col-sm-2 control-label" for="input-bin">{{entry_bin_number}}</label>
+	  <div class="col-sm-10">
+	   <input type="text" name="payment_snapio_number" value="{{ payment_snapio_number }}" placeholder="{{ payment_snapio_number }}" class="form-control" />
+	  </div>
+	  <div class="col-sm-2"></div>
+	  <div class="col-sm-10"><span>Fill with CC BIN numbers (or bank name) that you want to allow to use this payment button.<br> Separate BIN number with coma Example: 4,5,4811,bni,mandiri.<br>Leave it blank if you are not sure!</span></div>
+	</div>
+	<!-- CC Bin -->
+
+	<div class="form-group">
+	 <label class="col-sm-2 control-label" for="input-custom-field"><span data-toggle="tooltip" title="{{ help_custom_field }}">{{ entry_custom_field }}</span></label>
 	  <div class="col-sm-3">
 	   <input type="text" name="payment_snapio_custom_field1" value="{{ payment_snapio_custom_field1 }}" placeholder="{{ payment_snapio_custom_field1 }}" class="form-control" />
-	   <span> 'This will allow you to set custom fields that will be displayed on Midtrans dashboard.</span>
 	  </div>
 	  <div class="col-sm-3">
 	   <input type="text" name="payment_snapio_custom_field2" value="{{ payment_snapio_custom_field2 }}" placeholder="{{ payment_snapio_custom_field2 }}" class="form-control" />
@@ -156,28 +168,26 @@
 	  <div class="col-sm-3">
 	   <input type="text" name="payment_snapio_custom_field3" value="{{ payment_snapio_custom_field3 }}" placeholder="{{ payment_snapio_custom_field3 }}" class="form-control" />
 	  </div>
-	  <div class="col-sm-12">
-	  </div>
+	  <div class="col-sm-2"></div><div class="col-sm-10"><span>Leave it blank if you are not sure!</span></div>
 	</div>
-	<!-- custom field -->
+	<!-- Custom Field -->
 
 	<div class="form-group required">
-	 <label class="col-sm-2 control-label" for="input-merchant-id">{{entry_currency_conversion}}</label>
-	  <div class="col-sm-3">
+	 <label class="col-sm-2 control-label" for="input-currency">{{entry_currency_conversion}}</label>
+	  <div class="col-sm-10">
 	   <input type="text" name="payment_snapio_currency_conversion" value="{{ payment_snapio_currency_conversion }}" placeholder="{{ payment_snapio_currency_conversion }}" class="form-control" />
-		<span>Set to 1 if your default currency is IDR</span>
+		<span>Set to 1 if your default currency is IDR.</span>
 	  </div>
-	  <div class="col-sm-3">
+	  <div class="col-sm-2"></div>
 		{%if error_currency_conversion %}
-		<div class="col-sm-3">{{ error_currency_conversion }}</div>
+		<div class="col-sm-10">{{ error_currency_conversion }}</div>
 		{% endif %}
-	  </div>
 	</div>
 	<!-- Currency -->
 
 	<div class="form-group">
-	 <label class="col-sm-2 control-label" for="input-merchant-id">{{entry_geo_zone}}</label>
-	  <div class="col-sm-3">
+	 <label class="col-sm-2 control-label" for="input-geo-zone">{{entry_geo_zone}}</label>
+	  <div class="col-sm-10">
 	   <select name="payment_snapio_geo_zone_id"  class="form-control">
 		<option value="0">{{ text_all_zones }}</option>
 		{% for geo_zone in geo_zones  %}
@@ -193,15 +203,12 @@
 	<!-- Geo Zone -->
 
 	<div class="form-group">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_sort_order }}</label>
-		<div class="col-sm-1">
+	  <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+		<div class="col-sm-2">
 		 <input size="1" type="text" name="payment_snapio_sort_order" value="{{ payment_snapio_sort_order }}" placeholder="{{ payment_snapio_sort_order }}" class="form-control" />
 		</div>
 	</div>
-	
-	<div>
-	 <center><font size="1">version 1.0</font></center>
-	</div>
+	<!-- Sort Order -->
 
    </form>
   </div>
