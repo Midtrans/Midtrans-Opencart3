@@ -32,7 +32,13 @@ class ControllerExtensionPaymentSnapinst extends Controller {
     } else {
       $data['error_display_name'] = '';
     }
-    
+
+    if (isset($this->error['merchant_id'])) {
+      $data['error_merchant_id'] = $this->error['merchant_id'];
+    } else {
+      $data['error_merchant_id'] = '';
+    }
+
     if (isset($this->error['server_key'])) {
       $data['error_server_key'] = $this->error['server_key'];
     } else {
