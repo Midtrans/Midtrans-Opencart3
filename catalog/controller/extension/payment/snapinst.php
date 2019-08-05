@@ -48,6 +48,8 @@ class ControllerExtensionPaymentSnapinst extends Controller {
     $data['opencart_version'] = VERSION;
     $data['mtplugin_version'] = OC3_MIDTRANS_PLUGIN_VERSION;
 
+    $data['disable_mixpanel'] = $this->config->get('payment_snapinst_mixpanel');
+
     return $this->load->view('extension/payment/snapinst', $data);
       
     
@@ -215,17 +217,7 @@ class ControllerExtensionPaymentSnapinst extends Controller {
     }
 
     Veritrans_Config::$serverKey = $this->config->get('payment_snapinst_server_key');
-
-    // error_log(Veritrans_Config::$serverKey);    
-
-    Veritrans_Config::$isProduction =
-        $this->config->get('payment_snapinst_environment') == 'production'
-        ? true : false;
-
-    // error_log($this->config->get('payment_snapinst_environment'));        
-
-    Veritrans_Config::$is3ds = true;
-
+    Veritrans_Config::$isProduction = $this->config->get('payment_snapinst_environment') == 'production' ? true : false;
     Veritrans_Config::$isSanitized = true;
 
     $installment = array();
@@ -249,6 +241,7 @@ class ControllerExtensionPaymentSnapinst extends Controller {
     $payloads['item_details']        = $item_details;
     $payloads['customer_details']    = $customer_details;
     $payloads['enabled_payments']    = array('credit_card');
+    $payloads['credit_card']['secure'] = true;
     
     if ($transaction_details['gross_amount'] >= $this->config->get('payment_snapinst_min_txn')){
       $payloads['credit_card'] = $credit_card;
@@ -261,7 +254,6 @@ class ControllerExtensionPaymentSnapinst extends Controller {
     try {
       // error_log(print_r($payloads,TRUE));
       $snapToken = Veritrans_Snap::getSnapToken($payloads);      
-      // $this->cart->clear();      
       //$this->response->setOutput($redirUrl);
       $this->response->setOutput($snapToken);
     }

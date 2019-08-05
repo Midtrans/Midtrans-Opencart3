@@ -9,8 +9,6 @@ $_['text_success']       = 'Success: You have modified Midtrans configuration!';
 $_['text_snap']     = '<a href="https://midtrans.com" target="_blank"><img src="view/image/payment/midtrans.png" width="120px" alt="Midtrans" title="Midtrans" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_live']          = 'production';
 $_['text_sandbox']       = 'sandbox';
-$_['text_successful']    = 'Always Successful';
-$_['text_fail']          = 'Always Fail';
 $_['text_edit']          = 'Configure Midtrans';
 
 // Entry
@@ -26,10 +24,8 @@ $_['entry_sort_order']   = 'Sort Order:';
 $_['entry_expiry']   	 = 'Custom Expire';
 $_['entry_custom_field'] = 'Custom Field';
 $_['entry_currency_conversion'] = 'Currency conversion to IDR';
-$_['entry_snap_success_mapping'] = 'Map Payment Success Status to Order Status:';
-$_['entry_snap_challenge_mapping'] = 'Map Payment Challenge Status to Order Status:';
-$_['entry_snap_failure_mapping'] = 'Map Payment Failure Status to Order Status:';
 $_['entry_display_name'] = 'Display name';
+$_['entry_mixpanel']	 = 'Midtrans Mixpanel';
 
 // Help
 $_['help_savecard'] = 'This will allow your customer to save their card on the payment popup, for faster payment flow on the following purchase.';

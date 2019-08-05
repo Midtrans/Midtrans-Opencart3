@@ -86,7 +86,6 @@ class ControllerExtensionPaymentSnap extends Controller {
       'payment_snap_server_key',
       'payment_snap_client_key',
       'payment_snap_oneclick',
-      'payment_snap_order_status_id',
       'payment_snap_geo_zone_id',
       'payment_snap_sort_order',
       'payment_snap_3d_secure',
@@ -97,6 +96,7 @@ class ControllerExtensionPaymentSnap extends Controller {
       'payment_snap_custom_field1',
       'payment_snap_custom_field2',
       'payment_snap_custom_field3',
+      'payment_snap_mixpanel',
     );
 
     foreach ($inputs as $input) {

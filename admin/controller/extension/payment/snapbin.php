@@ -80,23 +80,26 @@ class ControllerExtensionPaymentSnapbin extends Controller {
     $data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'].'&type=payment', true);
 
     $inputs = array(
+      'payment_snapbin_status',
       'payment_snapbin_display_name',
       'payment_snapbin_environment',
       'payment_snapbin_merchant_id',
       'payment_snapbin_server_key',
       'payment_snapbin_client_key',
-      'payment_snapbin_number',
+      'payment_snapbin_enabled_payments',
       'payment_snapbin_oneclick',
-      'payment_snapbin_order_status_id',
-      'payment_snapbin_geo_zone_id',
-      'payment_snapbin_sort_order',
+      'payment_snapbin_number',
+      'payment_snapbin_acq_bank',
       'payment_snapbin_3d_secure',
-      'payment_snapbin_currency_conversion',
-      'payment_snapbin_status',
+      'payment_snapbin_expiry_duration',
+      'payment_snapbin_expiry_unit',
       'payment_snapbin_custom_field1',
       'payment_snapbin_custom_field2',
       'payment_snapbin_custom_field3',
-      'payment_snapbin_acq_bank',
+      'payment_snapbin_mixpanel',
+      'payment_snapbin_currency_conversion',
+      'payment_snapbin_geo_zone_id',
+      'payment_snapbin_sort_order',
     );
 
     foreach ($inputs as $input) {
@@ -114,6 +117,12 @@ class ControllerExtensionPaymentSnapbin extends Controller {
     $this->load->model('localisation/geo_zone');
 
     $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
+    $data['expiry'] = array();
+    $unit1 = array('id' => 1,'unit' => "minutes");
+    $unit2 = array('id' => 2,'unit' => "hours");
+    $unit3 = array('id' => 3,'unit' => "days");
+    array_push($data['expiry'] , $unit1, $unit2, $unit3);
     
     // $this->template = 'exension/payment/snap.tpl';
   	$data['header'] = $this->load->controller('common/header');
