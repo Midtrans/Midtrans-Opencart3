@@ -1,17 +1,15 @@
 <?php
 // Heading
-$_['heading_title']      = 'Midtrans Credit Card Bins';
+$_['heading_title']      = 'Midtrans Specific Payment Method';
 
 // Text
 $_['text_extension']	 = 'Extensions';
 $_['text_payment']       = 'Payment';
-$_['text_success']       = 'Success: You have modified Midtrans Credit Card Bins configuration!';
+$_['text_success']       = 'Success: You have modified Midtrans Specific Payment Method configuration!';
 $_['text_snapbin']     = '<a href="https://midtrans.com" target="_blank"><img src="view/image/payment/midtrans.png" width="120px" alt="Midtrans" title="Midtrans" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_live']          = 'production';
 $_['text_sandbox']       = 'sandbox';
-$_['text_successful']    = 'Always Successful';
-$_['text_fail']          = 'Always Fail';
-$_['text_edit']          = 'Configure Midtrans Credit Card Bins';
+$_['text_edit']          = 'Configure Midtrans Midtrans Specific Payment Method';
 
 // Entry
 $_['entry_environment']  = 'Environment'; // v2 API only
@@ -26,15 +24,16 @@ $_['entry_status']       = 'Status';
 $_['entry_sort_order']   = 'Sort Order:';
 $_['entry_custom_field'] = 'Custom Field';
 $_['entry_currency_conversion'] = 'Currency conversion to IDR';
-$_['entry_snapbin_success_mapping'] = 'Map Payment Success Status to Order Status:';
-$_['entry_snapbin_challenge_mapping'] = 'Map Payment Challenge Status to Order Status:';
-$_['entry_snapbin_failure_mapping'] = 'Map Payment Failure Status to Order Status:';
 $_['entry_display_name'] = 'Display name';
 $_['entry_acq_bank']	 = 'Acquiring Bank';
 $_['entry_3ds'] = '3D Secure';
+$_['entry_enabled_payments'] = 'Allowed Payment Method';
+$_['entry_expiry']   	 = 'Custom Expire';
+$_['entry_mixpanel']	 = 'Midtrans Mixpanel';
 
 // Help
 $_['help_savecard'] = 'This will allow your customer to save their card on the payment popup, for faster payment flow on the following purchase.';
+$_['help_expiry'] = 'This will allow you to set custom duration on how long the transaction available to be paid.';
 $_['help_custom_field'] = 'This will allow you to set custom fields that will be displayed on Midtrans dashboard.';
 
 // Error

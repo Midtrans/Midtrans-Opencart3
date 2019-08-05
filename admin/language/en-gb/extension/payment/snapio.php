@@ -9,8 +9,6 @@ $_['text_success']       = 'Success: You have modified Midtrans Offline Instalme
 $_['text_snapio']     = '<a href="https://midtrans.com" target="_blank"><img src="view/image/payment/midtrans.png" width="120px" alt="Midtrans" title="Midtrans" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_live']          = 'production';
 $_['text_sandbox']       = 'sandbox';
-$_['text_successful']    = 'Always Successful';
-$_['text_fail']          = 'Always Fail';
 $_['text_edit']          = 'Configure Midtrans Offline Installment';
 
 // Entry
@@ -26,13 +24,11 @@ $_['entry_min_txn']   	 = 'Minimum amount';
 $_['entry_sort_order']   = 'Sort Order:';
 $_['entry_custom_field'] = 'Custom Field';
 $_['entry_currency_conversion'] = 'Currency conversion to IDR';
-$_['entry_snapio_success_mapping'] = 'Map Payment Success Status to Order Status:';
-$_['entry_snapio_challenge_mapping'] = 'Map Payment Challenge Status to Order Status:';
-$_['entry_snapio_failure_mapping'] = 'Map Payment Failure Status to Order Status:';
 $_['entry_display_name'] = 'Display name';
 $_['entry_acq_bank']	 = 'Acquiring Bank';
 $_['entry_installment_term'] = 'Installment Terms';
 $_['entry_bin_number']  = 'Bin Number';
+$_['entry_mixpanel']	 = 'Midtrans Mixpanel';
 
 // Help
 $_['help_min'] = 'Minimum amount of transaction.';

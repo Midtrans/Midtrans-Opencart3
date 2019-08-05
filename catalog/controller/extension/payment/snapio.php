@@ -48,6 +48,8 @@ class ControllerExtensionPaymentSnapio extends Controller {
     $data['opencart_version'] = VERSION;
     $data['mtplugin_version'] = OC3_MIDTRANS_PLUGIN_VERSION;
 
+    $data['disable_mixpanel'] = $this->config->get('payment_snapio_mixpanel');
+
     return $this->load->view('extension/payment/snapio', $data);
 
   }
@@ -213,13 +215,7 @@ class ControllerExtensionPaymentSnapio extends Controller {
     }
 
     Veritrans_Config::$serverKey = $this->config->get('payment_snapio_server_key');
-
-    Veritrans_Config::$isProduction =
-        $this->config->get('payment_snapio_environment') == 'production'
-        ? true : false;
-
-    Veritrans_Config::$is3ds = true;
-
+    Veritrans_Config::$isProduction = $this->config->get('payment_snapio_environment') == 'production' ? true : false;
     Veritrans_Config::$isSanitized = true;
 
     $payloads = array();
@@ -227,7 +223,8 @@ class ControllerExtensionPaymentSnapio extends Controller {
     $payloads['item_details']        = $item_details;
     $payloads['customer_details']    = $customer_details;
     $payloads['enabled_payments']    = array('credit_card');
-    
+    $payloads['credit_card']['secure'] = true;
+
     if ($transaction_details['gross_amount'] >= $this->config->get('payment_snapio_min_txn')){
       // Build bank & terms array
       $termsStr = explode(',', $this->config->get('payment_snapio_installment_term'));
@@ -259,7 +256,6 @@ class ControllerExtensionPaymentSnapio extends Controller {
     try {
       // error_log(print_r($payloads,TRUE));
       $snapToken = Veritrans_Snap::getSnapToken($payloads);
-      // $this->cart->clear();    
       //$this->response->setOutput($redirUrl);
       $this->response->setOutput($snapToken);
     }
