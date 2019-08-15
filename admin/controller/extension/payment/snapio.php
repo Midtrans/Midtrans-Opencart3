@@ -103,6 +103,8 @@ class ControllerExtensionPaymentSnapio extends Controller {
       'payment_snapio_custom_field2',
       'payment_snapio_custom_field3',
       'payment_snapio_mixpanel',
+      'payment_snapio_status_failure',
+      'payment_snapio_status_success'
     );
 
     foreach ($inputs as $input) {
