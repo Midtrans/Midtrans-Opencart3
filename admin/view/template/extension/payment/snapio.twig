@@ -227,6 +227,48 @@
                     </div>
                     <!-- Mixpanel -->
 
+                    <div class="form-group">
+                        <label class="col-sm-2" for="input-success-status">
+                            <span data-toggle="tooltip" title="{{ help_success_mapping }}">{{ entry_success_mapping }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="payment_snapio_status_success">
+                                {% for order_status in order_statuses  %}
+                                    <option {% if order_status.order_status_id == payment_snapio_status_success %} selected {% endif %} value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Success Order Status -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2" for="input-pending-status">
+                            <span data-toggle="tooltip" title="{{ help_pending_mapping }}">{{ entry_pending_mapping }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="payment_snapio_status_pending">
+                                {% for order_status in order_statuses  %}
+                                    <option {% if order_status.order_status_id == payment_snapio_status_pending %} selected {% endif %} value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Pending Order Status -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2" for="input-failure-status">
+                            <span data-toggle="tooltip" title="{{ help_failure_mapping }}">{{ entry_failure_mapping }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="payment_snapio_status_failure">
+                                {% for order_status in order_statuses  %}
+                                    <option {% if order_status.order_status_id == payment_snapio_status_failure %} selected {% endif %} value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Failure Order Status -->
+
                     <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-currency">{{entry_currency_conversion}}</label>
                         <div class="col-sm-10">
@@ -239,36 +281,6 @@
                         {% endif %}
                     </div>
                     <!-- Currency -->
-
-
-                    <div class="form-group">
-                        <label class="col-sm-2" for="input-merchant-id">
-                            <p>{{entry_success_mapping}}</p>
-                            <h5>{{help_success_mapping}}</h5>
-                        </label>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="payment_snapio_status_success">
-                                {% for order_status in order_statuses  %}
-                                    <option {% if order_status.order_status_id == payment_snapio_status_success %} selected {% endif %} value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2" for="input-merchant-id">
-                            <p>{{entry_failure_mapping}}</p>
-                            <h5>{{help_failure_mapping}}</h5>
-                        </label>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="payment_snapio_status_failure">
-
-                                {% for order_status in order_statuses  %}
-                                    <option {% if order_status.order_status_id == payment_snapio_status_failure %} selected {% endif %} value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-geo-zone">{{entry_geo_zone}}</label>

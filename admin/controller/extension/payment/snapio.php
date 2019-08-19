@@ -102,9 +102,7 @@ class ControllerExtensionPaymentSnapio extends Controller {
       'payment_snapio_custom_field1',
       'payment_snapio_custom_field2',
       'payment_snapio_custom_field3',
-      'payment_snapio_mixpanel',
-      'payment_snapio_status_failure',
-      'payment_snapio_status_success'
+      'payment_snapio_mixpanel'
     );
 
     foreach ($inputs as $input) {
@@ -113,6 +111,30 @@ class ControllerExtensionPaymentSnapio extends Controller {
       } else {
         $data[$input] = $this->config->get($input);
       }
+    }
+
+    if (isset($this->request->post['payment_snapio_status_success'])) {
+      $data['payment_snapio_status_success'] = $this->request->post['payment_snapio_status_success'];
+    } elseif ($this->config->get('payment_snapio_status_success')) {
+      $data['payment_snapio_status_success'] = $this->config->get('payment_snapio_status_success');
+    } else {
+      $data['payment_snapio_status_success'] = '2';
+    }
+
+    if (isset($this->request->post['payment_snapio_status_pending'])) {
+      $data['payment_snapio_status_pending'] = $this->request->post['payment_snapio_status_pending'];
+    } elseif ($this->config->get('payment_snapio_status_pending')) {
+      $data['payment_snapio_status_pending'] = $this->config->get('payment_snapio_status_pending');
+    } else {
+      $data['payment_snapio_status_pending'] = '1';
+    }
+
+    if (isset($this->request->post['payment_snapio_status_failure'])) {
+      $data['payment_snapio_status_failure'] = $this->request->post['payment_snapio_status_failure'];
+    } elseif ($this->config->get('payment_snapio_status_failure')) {
+      $data['payment_snapio_status_failure'] = $this->config->get('payment_snapio_status_failure');
+    } else {
+      $data['payment_snapio_status_failure'] = '7';
     }
 
     $this->load->model('localisation/order_status');

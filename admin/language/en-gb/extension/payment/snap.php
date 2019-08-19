@@ -27,15 +27,14 @@ $_['entry_currency_conversion'] = 'Currency conversion to IDR';
 $_['entry_display_name'] = 'Display name';
 $_['entry_mixpanel']	 = 'Midtrans Mixpanel';
 $_['entry_success_mapping'] = 'Success Order Status';
-$_['entry_challenge_mapping'] = 'Pending Order Status';
+$_['entry_pending_mapping'] = 'Pending Order Status';
 $_['entry_failure_mapping'] = 'Failure Order Status';
-$_['entry_failure_mapping'] = 'Map Payment Failure Status to Order Status:';
 $_['entry_status_failed'] = 'Failure Order Status';
 $_['entry_status_success'] = 'Success Order Status';
 $_['entry_display_name'] = 'Display name:';
 
 // Help
-$_['help_challenge_mapping'] = 'Change to the following order status once the payment pending';
+$_['help_pending_mapping'] = 'Change to the following order status once the payment pending';
 $_['help_failure_mapping'] = 'Change to the following order status once the payment failure';
 $_['help_success_mapping'] = 'Change to the following order status once the payment success';
 $_['help_savecard'] = 'This will allow your customer to save their card on the payment popup, for faster payment flow on the following purchase.';

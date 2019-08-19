@@ -96,9 +96,7 @@ class ControllerExtensionPaymentSnap extends Controller {
       'payment_snap_custom_field1',
       'payment_snap_custom_field2',
       'payment_snap_custom_field3',
-      'payment_snap_mixpanel',
-      'payment_snap_status_failure',
-      'payment_snap_status_success'
+      'payment_snap_mixpanel'
     );
 
     foreach ($inputs as $input) {
@@ -107,6 +105,30 @@ class ControllerExtensionPaymentSnap extends Controller {
       } else {
         $data[$input] = $this->config->get($input);
       }
+    }
+
+    if (isset($this->request->post['payment_snap_status_success'])) {
+      $data['payment_snap_status_success'] = $this->request->post['payment_snap_status_success'];
+    } elseif ($this->config->get('payment_snap_status_success')) {
+      $data['payment_snap_status_success'] = $this->config->get('payment_snap_status_success');
+    } else {
+      $data['payment_snap_status_success'] = '2';
+    }
+
+    if (isset($this->request->post['payment_snap_status_pending'])) {
+      $data['payment_snap_status_pending'] = $this->request->post['payment_snap_status_pending'];
+    } elseif ($this->config->get('payment_snap_status_pending')) {
+      $data['payment_snap_status_pending'] = $this->config->get('payment_snap_status_pending');
+    } else {
+      $data['payment_snap_status_pending'] = '1';
+    }
+
+    if (isset($this->request->post['payment_snap_status_failure'])) {
+      $data['payment_snap_status_failure'] = $this->request->post['payment_snap_status_failure'];
+    } elseif ($this->config->get('payment_snap_status_failure')) {
+      $data['payment_snap_status_failure'] = $this->config->get('payment_snap_status_failure');
+    } else {
+      $data['payment_snap_status_failure'] = '7';
     }
 
     $this->load->model('localisation/order_status');
@@ -171,6 +193,10 @@ class ControllerExtensionPaymentSnap extends Controller {
       $this->error['server_key'] = $this->language->get('error_server_key');
     }
     
+    if (!$this->request->post['payment_snap_status_success']) {
+      $this->error['server_key'] = $this->language->get('error_server_key');
+    }
+
     // currency conversion to IDR
     if (!$this->request->post['payment_snap_currency_conversion'] && !$this->currency->has('IDR'))
       $this->error['currency_conversion'] = $this->language->get('error_currency_conversion');
