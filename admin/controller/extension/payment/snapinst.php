@@ -99,7 +99,7 @@ class ControllerExtensionPaymentSnapinst extends Controller {
       'payment_snapinst_custom_field1',
       'payment_snapinst_custom_field2',
       'payment_snapinst_custom_field3',
-      'payment_snapinst_mixpanel',
+      'payment_snapinst_mixpanel'
     );
 
     foreach ($inputs as $input) {
@@ -110,6 +110,30 @@ class ControllerExtensionPaymentSnapinst extends Controller {
       }
     }
 
+    if (isset($this->request->post['payment_snapinst_status_success'])) {
+      $data['payment_snapinst_status_success'] = $this->request->post['payment_snapinst_status_success'];
+    } elseif ($this->config->get('payment_snapinst_status_success')) {
+      $data['payment_snapinst_status_success'] = $this->config->get('payment_snapinst_status_success');
+    } else {
+      $data['payment_snapinst_status_success'] = '2';
+    }
+
+    if (isset($this->request->post['payment_snapinst_status_pending'])) {
+      $data['payment_snapinst_status_pending'] = $this->request->post['payment_snapinst_status_pending'];
+    } elseif ($this->config->get('payment_snapinst_status_pending')) {
+      $data['payment_snapinst_status_pending'] = $this->config->get('payment_snapinst_status_pending');
+    } else {
+      $data['payment_snapinst_status_pending'] = '1';
+    }
+
+    if (isset($this->request->post['payment_snapinst_status_failure'])) {
+      $data['payment_snapinst_status_failure'] = $this->request->post['payment_snapinst_status_failure'];
+    } elseif ($this->config->get('payment_snapinst_status_failure')) {
+      $data['payment_snapinst_status_failure'] = $this->config->get('payment_snapinst_status_failure');
+    } else {
+      $data['payment_snapinst_status_failure'] = '7';
+    }
+    
     $this->load->model('localisation/order_status');
 
     $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();

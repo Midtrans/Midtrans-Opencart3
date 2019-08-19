@@ -1,5 +1,9 @@
 # Changelog
 
+2.0.2
+-----
+- add order status mapping in admin settings
+
 2.0.1
 -----
 - add disable midtrans mixpanel on admin settings

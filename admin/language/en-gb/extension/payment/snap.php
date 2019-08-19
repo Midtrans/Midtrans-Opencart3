@@ -26,8 +26,17 @@ $_['entry_custom_field'] = 'Custom Field';
 $_['entry_currency_conversion'] = 'Currency conversion to IDR';
 $_['entry_display_name'] = 'Display name';
 $_['entry_mixpanel']	 = 'Midtrans Mixpanel';
+$_['entry_success_mapping'] = 'Success Order Status';
+$_['entry_pending_mapping'] = 'Pending Order Status';
+$_['entry_failure_mapping'] = 'Failure Order Status';
+$_['entry_status_failed'] = 'Failure Order Status';
+$_['entry_status_success'] = 'Success Order Status';
+$_['entry_display_name'] = 'Display name:';
 
 // Help
+$_['help_pending_mapping'] = 'Change to the following order status once the payment pending';
+$_['help_failure_mapping'] = 'Change to the following order status once the payment failure';
+$_['help_success_mapping'] = 'Change to the following order status once the payment success';
 $_['help_savecard'] = 'This will allow your customer to save their card on the payment popup, for faster payment flow on the following purchase.';
 $_['help_expiry'] = 'This will allow you to set custom duration on how long the transaction available to be paid.';
 $_['help_custom_field'] = 'This will allow you to set custom fields that will be displayed on Midtrans dashboard.';

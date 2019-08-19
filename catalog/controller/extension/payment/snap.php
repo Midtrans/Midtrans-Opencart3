@@ -506,36 +506,36 @@ class ControllerExtensionPaymentSnap extends Controller {
       if ($fraud == 'challenge') {
         $logs .= 'challenge ';
         $this->model_checkout_order->addOrderHistory(
-            $notif->order_id,2,
+            $notif->order_id,$this->config->get('payment_snap_status_pending'),
             $order_note .'Payment status challenged. Please take action on '
               . 'your Merchant Administration Portal - ' . $payment_type);
       }
       else if ($fraud == 'accept') {
         $logs .= 'accept ';
         $this->model_checkout_order->addOrderHistory(
-            $notif->order_id,2,$order_note . 'Payment Completed - ' . $payment_type);
+            $notif->order_id,$this->config->get('payment_snap_status_success'),$order_note . 'Payment Completed - ' . $payment_type);
       }
     }
     else if ($transaction == 'cancel') {
         $logs .= 'cancel ';
         $this->model_checkout_order->addOrderHistory(
-            $notif->order_id,7,$order_note . 'Canceled Payment - ' . $payment_type);
+            $notif->order_id,$this->config->get('payment_snap_status_failure'),$order_note . 'Canceled Payment - ' . $payment_type);
     }
     else if ($transaction == 'pending') {
       $logs .= 'pending ';
       $this->model_checkout_order->addOrderHistory(
-          $notif->order_id,1,$order_note . 'Awaiting Payment - ' . $payment_type);
+          $notif->order_id,$this->config->get('payment_snap_status_pending'),$order_note . 'Awaiting Payment - ' . $payment_type);
     }
     else if ($transaction == 'expire') {
       $logs .= 'expire';
       $this->model_checkout_order->addOrderHistory(
-          $notif->order_id,14,$order_note . 'Expired Payment - ' . $payment_type);
+          $notif->order_id,$this->config->get('payment_snap_status_failure'),$order_note . 'Expired Payment - ' . $payment_type);
     }
     else if ($transaction == 'settlement') {
           if($payment_type != 'credit_card'){
               $logs .= 'complete ';
               $this->model_checkout_order->addOrderHistory(
-              $notif->order_id,2,$order_note . 'Payment Completed - ' . $payment_type);
+              $notif->order_id,$this->config->get('payment_snap_status_success'),$order_note . 'Payment Completed - ' . $payment_type);
           }
     }
     //error_log($logs); //debugan to be commented
@@ -546,7 +546,7 @@ class ControllerExtensionPaymentSnap extends Controller {
     $this->load->model('checkout/order');
     // error_log($this->session->data['order_id']);
     $current_order_id = $this->session->data['order_id'];
-    $this->model_checkout_order->addOrderHistory($current_order_id,7,'Cancel from snap close.');
+    $this->model_checkout_order->addOrderHistory($current_order_id,$this->config->get('payment_snap_status_failure'),'Cancel from snap close.');
     // error_log('cancel order'. $this->session->data['order_id']. 'success');
     echo 'ok';
   }
