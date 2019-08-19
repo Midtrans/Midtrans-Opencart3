@@ -1,202 +1,262 @@
 {{ header }}{{ column_left }}
-<div id="content">
-<!--header, breadcrumb & button-->
-<div class="page-header">
-  <div class="container-fluid">
-   <div class="pull-right">
-    <button type="submit" form="form-midtrans-snapinst" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-    <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
-   </div>
-   <h1>{{ heading_title }}</h1>
-   <ul class="breadcrumb">
-    {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-    {% endfor %}
-   </ul>
-  </div>
-</div>
-<!--header, breadcrumb & button-->
-
-
- <div class="container-fluid">
-   
-   <!--error-->
-   {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-     <button type="button" class="close" data-dismiss="alert">&times;</button>
+<div
+    id="content">
+    <!--header, breadcrumb & button-->
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-midtrans-snapinst" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary">
+                    <i class="fa fa-save"></i>
+                </button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default">
+                    <i class="fa fa-reply"></i>
+                </a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li>
+                        <a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-   {% endif %}
-   <!--error-->
+    <!--header, breadcrumb & button-->
 
-   <div class="panel panel-default">
-    <div class="panel-heading">
-	 <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+
+    <div
+        class="container-fluid">
+
+        <!--error-->
+        {% if error_warning %}
+            <div class="alert alert-danger alert-dismissible">
+                <i class="fa fa-exclamation-circle"></i>
+                {{ error_warning }}
+                <button class="close" data-dismiss="alert" type="button">&times;</button>
+            </div>
+        {% endif %}
+        <!--error-->
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-pencil"></i>
+                    {{ text_edit }}</h3>
+            </div>
+
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-midtrans-snap" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-status">
+                            {{ entry_status }}
+                        </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="input-status" name="payment_snapinst_status">
+
+                                {% if payment_snapinst_status %}
+                                    <option selected="selected" value="1">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option selected="selected" value="0">{{ text_disabled }}</option>
+                                {% endif %}
+
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Status -->
+
+                    <div class="form-group required sensitive">
+                        <label class="col-sm-2 control-label" for="input-display-name">{{ entry_display_name }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_snapinst_display_name" value="{{ payment_snapinst_display_name }}" placeholder="{{ payment_snapinst_display_name }}" id="input-display-name" class="form-control"/>
+                            {% if error_display_name %}
+                                <div class="text-danger">
+                                    {{ error_display_name }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Display name -->
+
+                    <div class="form-group required sensitive">
+                        <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_snapinst_merchant_id" value="{{ payment_snapinst_merchant_id }}" placeholder="{{ payment_snapinst_merchant_id }}" id="input-merchant-id" class="form-control"/>
+                            {% if error_merchant_id %}
+                                <div class="text-danger">
+                                    {{ error_merchant_id }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Merchant Id (v2-specific) -->
+
+                    <div class="form-group sensitive">
+                        <label class="col-sm-2 control-label" for="input-mode">{{ entry_environment }}</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="input-mode" name="payment_snapinst_environment">
+                                {% if payment_snapinst_environment == 'sandbox' %}
+                                    <option selected="selected" value="sandbox">{{ text_sandbox }}</option>
+                                {% else %}
+                                    <option value="sandbox">{{ text_sandbox }}</option>
+                                {% endif %}
+                                {% if payment_snapinst_environment == 'production' %}
+                                    <option selected="selected" value="production">{{ text_live }}</option>
+                                {% else %}
+                                    <option value="production">{{ text_live }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Environment (v2-specific) -->
+
+                    <div class="form-group required sensitive">
+                        <label class="col-sm-2 control-label" for="input-client-key">{{ entry_client_key }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_snapinst_client_key" value="{{ payment_snapinst_client_key }}" placeholder="{{ payment_snapinst_client_key }}" id="input-client-key" class="form-control"/>
+                            {% if error_client_key %}
+                                <div class="text-danger">
+                                    {{ error_client_key }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Client Key (v2-specific) -->
+
+                    <div class="form-group required sensitive">
+                        <label class="col-sm-2 control-label" for="input-server-key">{{ entry_server_key }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_snapinst_server_key" value="{{ payment_snapinst_server_key }}" placeholder="{{ payment_snapinst_server_key }}" id="input-server-key" class="form-control"/>
+                            {% if error_server_key %}
+                                <div class="text-danger">
+                                    {{ error_server_key }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Server Key (v2-specific) -->
+
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-min-txn">
+                            <span data-toggle="tooltip" title="{{ help_min }}">{{ entry_min_txn }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_snapinst_min_txn" value="{{ payment_snapinst_min_txn }}" placeholder="{{ payment_snapinst_min_txn }}" class="form-control"/>
+                            {% if error_min_txn %}
+                                <div class="text-danger">
+                                    {{ error_min_txn }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Min Txn -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-custom-field">
+                            <span data-toggle="tooltip" title="{{ help_custom_field }}">{{ entry_custom_field }}</span>
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" name="payment_snapinst_custom_field1" value="{{ payment_snapinst_custom_field1 }}" placeholder="{{ payment_snapinst_custom_field1 }}" class="form-control"/>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" name="payment_snapinst_custom_field2" value="{{ payment_snapinst_custom_field2 }}" placeholder="{{ payment_snapinst_custom_field2 }}" class="form-control"/>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" name="payment_snapinst_custom_field3" value="{{ payment_snapinst_custom_field3 }}" placeholder="{{ payment_snapinst_custom_field3 }}" class="form-control"/>
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                            <span>Leave it blank if you are not sure!</span>
+                        </div>
+                    </div>
+                    <!-- Custom Field -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-mixpanel">{{ entry_mixpanel }}</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="input-mixpanel" name="payment_snapinst_mixpanel">
+                                {% if payment_snapinst_mixpanel %}
+                                    <option selected="selected" value="1">{{ text_disabled }}</option>
+                                    <option value="0">{{ text_enabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_disabled }}</option>
+                                    <option selected="selected" value="0">{{ text_enabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Mixpanel -->
+
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-currency">{{entry_currency_conversion}}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="payment_snapinst_currency_conversion" value="{{ payment_snapinst_currency_conversion }}" placeholder="{{ payment_snapinst_currency_conversion }}" class="form-control"/>
+                            <span>Set to 1 if your default currency is IDR.</span>
+                        </div>
+                    </div>
+                    <!-- Currency -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2" for="input-merchant-id">
+                            <p>{{entry_success_mapping}}</p>
+                            <h5>{{help_success_mapping}}</h5>
+                        </label>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="payment_snapinst_status_success">
+                                {% for order_status in order_statuses  %}
+                                    <option {% if order_status.order_status_id == payment_snapinst_status_success %} selected {% endif %} value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2" for="input-merchant-id">
+                            <p>{{entry_failure_mapping}}</p>
+                            <h5>{{help_failure_mapping}}</h5>
+                        </label>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="payment_snapinst_status_failure">
+
+                                {% for order_status in order_statuses  %}
+                                    <option {% if order_status.order_status_id == payment_snapinst_status_failure %} selected {% endif %} value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-geo-zone">{{entry_geo_zone}}</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="payment_snapinst_geo_zone_id">
+                                <option value="0">{{ text_all_zones }}</option>
+                                {% for geo_zone in geo_zones  %}
+                                    {% if geo_zone.geo_zone_id == payment_snapinst_geo_zone_id %}
+                                        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                                    {% else %}
+                                        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Geo Zone -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                        <div class="col-sm-2">
+                            <input size="1" type="text" name="payment_snapinst_sort_order" value="{{ payment_snapinst_sort_order }}" placeholder="{{ payment_snapinst_sort_order }}" class="form-control"/>
+                        </div>
+                    </div>
+                    <!-- Sort Order -->
+
+                </form>
+            </div>
+        </div>
     </div>
-
-	<div class="panel-body">
-	 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-midtrans-snap" class="form-horizontal">
-	 <div class="form-group">
-      <label class="col-sm-2 control-label" for="input-status"> {{ entry_status }} </label>
-		<div class="col-sm-10">
-		 <select name="payment_snapinst_status" id="input-status" class="form-control">
-		   
-		    {% if payment_snapinst_status %}
-             <option value="1" selected="selected">{{ text_enabled }}</option>
-             <option value="0">{{ text_disabled }}</option>
-             {% else %}
-              <option value="1">{{ text_enabled }}</option>
-              <option value="0" selected="selected">{{ text_disabled }}</option>
-            {% endif %}
-
-		  </select>
-		</div>
-	 </div>
-	<!-- Status -->
-
-	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-display-name">{{ entry_display_name }}</label>
-	    <div class="col-sm-10">
-		  <input type="text" name="payment_snapinst_display_name" value="{{ payment_snapinst_display_name }}" placeholder="{{ payment_snapinst_display_name }}" id="input-display-name" class="form-control" />
-		 {% if error_display_name %}
-			<div class="text-danger"> {{ error_display_name }} </div>
-		 {% endif %}
-		</div>
-	</div>
-	<!-- Display name -->
-
-	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
-	    <div class="col-sm-10">
-		  <input type="text" name="payment_snapinst_merchant_id" value="{{ payment_snapinst_merchant_id }}" placeholder="{{ payment_snapinst_merchant_id }}" id="input-merchant-id" class="form-control" />
-		 {% if error_merchant_id %}
-			<div class="text-danger"> {{ error_merchant_id }} </div>
-		 {% endif %}
-		</div>
-	</div>
-	<!-- Merchant Id (v2-specific) -->
-
-	<div class="form-group sensitive">
-	  <label class="col-sm-2 control-label" for="input-mode">{{ entry_environment }}</label>
-	    <div class="col-sm-10">
-		  <select name="payment_snapinst_environment" id="input-mode" class="form-control">
-		    {% if payment_snapinst_environment == 'sandbox' %}
-                <option value="sandbox" selected="selected">{{ text_sandbox }}</option>
-            {% else %}
-                <option value="sandbox">{{ text_sandbox }}</option>
-            {% endif %}
-            {% if payment_snapinst_environment == 'production' %}
-                <option value="production" selected="selected">{{ text_live }}</option>
-            {% else %}
-                <option value="production">{{ text_live }}</option>
-            {% endif %}
-		  </select>
-		</div>
-	</div>
-	<!-- Environment (v2-specific) -->
-						
-	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-client-key">{{ entry_client_key }}</label>
-	    <div class="col-sm-10">
-		  <input type="text" name="payment_snapinst_client_key" value="{{ payment_snapinst_client_key }}" placeholder="{{ payment_snapinst_client_key }}" id="input-client-key" class="form-control" />
-		 {% if error_client_key %}
-			<div class="text-danger"> {{ error_client_key }} </div>
-		 {% endif %}
-		</div>
-	</div>
-	<!-- Client Key (v2-specific) -->
-
-	<div class="form-group required sensitive">
-	  <label class="col-sm-2 control-label" for="input-server-key">{{ entry_server_key }}</label>
-		<div class="col-sm-10">
-		  <input type="text" name="payment_snapinst_server_key" value="{{ payment_snapinst_server_key }}" placeholder="{{ payment_snapinst_server_key }}" id="input-server-key" class="form-control" />
-		 {% if error_server_key %}
-			<div class="text-danger"> {{ error_server_key }} </div>
-		 {% endif %}
-		</div>
-	</div>
-	<!-- Server Key (v2-specific) --> 
-
-	<div class="form-group required">
-	 <label class="col-sm-2 control-label" for="input-min-txn"><span data-toggle="tooltip" title="{{ help_min }}">{{ entry_min_txn }}</span></label>
-	  <div class="col-sm-10">
-	   <input type="text" name="payment_snapinst_min_txn" value="{{ payment_snapinst_min_txn }}" placeholder="{{ payment_snapinst_min_txn }}" class="form-control" />
-		 {% if error_min_txn %}
-			<div class="text-danger"> {{ error_min_txn }} </div>
-		 {% endif %}
-	  </div>
-	</div>
-	<!-- Min Txn -->
-
-	<div class="form-group">
-	 <label class="col-sm-2 control-label" for="input-custom-field"><span data-toggle="tooltip" title="{{ help_custom_field }}">{{ entry_custom_field }}</span></label>
-	  <div class="col-sm-3">
-	   <input type="text" name="payment_snapinst_custom_field1" value="{{ payment_snapinst_custom_field1 }}" placeholder="{{ payment_snapinst_custom_field1 }}" class="form-control" />
-	  </div>
-	  <div class="col-sm-3">
-	   <input type="text" name="payment_snapinst_custom_field2" value="{{ payment_snapinst_custom_field2 }}" placeholder="{{ payment_snapinst_custom_field2 }}" class="form-control" />
-	  </div>
-	  <div class="col-sm-3">
-	   <input type="text" name="payment_snapinst_custom_field3" value="{{ payment_snapinst_custom_field3 }}" placeholder="{{ payment_snapinst_custom_field3 }}" class="form-control" />
-	  </div>
-	  <div class="col-sm-2"></div><div class="col-sm-10"><span>Leave it blank if you are not sure!</span></div>
-	</div>
-	<!-- Custom Field -->
-
-	<div class="form-group">
-      <label class="col-sm-2 control-label" for="input-mixpanel">{{ entry_mixpanel }}</label>
-		<div class="col-sm-10">
-		 <select name="payment_snapinst_mixpanel" id="input-mixpanel" class="form-control">
-		   {% if payment_snapinst_mixpanel %}
-                <option value="1" selected="selected">{{ text_disabled }}</option>
-                <option value="0">{{ text_enabled }}</option>
-                {% else %}
-                <option value="1">{{ text_disabled }}</option>
-                <option value="0" selected="selected">{{ text_enabled }}</option>
-           {% endif %}
-		  </select>
-		</div>
-	 </div>
-	 <!-- Mixpanel -->
-
-	<div class="form-group required">
-	 <label class="col-sm-2 control-label" for="input-currency">{{entry_currency_conversion}}</label>
-	  <div class="col-sm-10">
-	   <input type="text" name="payment_snapinst_currency_conversion" value="{{ payment_snapinst_currency_conversion }}" placeholder="{{ payment_snapinst_currency_conversion }}" class="form-control" />
-		<span>Set to 1 if your default currency is IDR.</span>
-	  </div>
-	</div>
-	<!-- Currency -->
-
-	<div class="form-group">
-	 <label class="col-sm-2 control-label" for="input-geo-zone">{{entry_geo_zone}}</label>
-	  <div class="col-sm-10">
-	   <select name="payment_snapinst_geo_zone_id"  class="form-control">
-		<option value="0">{{ text_all_zones }}</option>
-		{% for geo_zone in geo_zones  %}
-		  {% if geo_zone.geo_zone_id == payment_snapinst_geo_zone_id %}
-		   <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-		 {% else %}
-		   <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-		 {% endif %}
-        {% endfor %}
-	   </select>
-	  </div>
-	</div>
-	<!-- Geo Zone -->
-
-	<div class="form-group">
-	  <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
-		<div class="col-sm-2">
-		 <input size="1" type="text" name="payment_snapinst_sort_order" value="{{ payment_snapinst_sort_order }}" placeholder="{{ payment_snapinst_sort_order }}" class="form-control" />
-		</div>
-	</div>
-	<!-- Sort Order -->
-
-   </form>
-  </div>
- </div>
-</div>		
-<!-- content -->
+    <!-- content -->
 </div>
 
-{{ footer }} 
+{{ footer }}
