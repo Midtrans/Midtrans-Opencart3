@@ -18,7 +18,7 @@ status code
 */
 
 require_once(dirname(__FILE__) . '/snap_midtrans_version.php');
-require_once(DIR_SYSTEM . 'library/veritrans-php/Veritrans.php');
+require_once(DIR_SYSTEM . 'library/midtrans-php/Midtrans.php');
 
 class ControllerExtensionPaymentSnap extends Controller {
 
@@ -221,10 +221,10 @@ class ControllerExtensionPaymentSnap extends Controller {
       $item_details[] = $coupon_item;
     }
 
-    Veritrans_Config::$serverKey = $this->config->get('payment_snap_server_key');
-    Veritrans_Config::$isProduction = $this->config->get('payment_snap_environment') == 'production' ? true : false;
+    \Midtrans\Config::$serverKey = $this->config->get('payment_snap_server_key');
+    \Midtrans\Config::$isProduction = $this->config->get('payment_snap_environment') == 'production' ? true : false;
 
-    Veritrans_Config::$isSanitized = true;
+    \Midtrans\Config::$isSanitized = true;
 
     $payloads = array();
     $payloads['transaction_details'] = $transaction_details;
@@ -253,9 +253,9 @@ class ControllerExtensionPaymentSnap extends Controller {
     if(!empty($this->config->get('payment_snap_custom_field3'))){ $payloads['custom_field3'] = $this->config->get('payment_snap_custom_field3');}
 
     try {
-      $snapToken = Veritrans_Snap::getSnapToken($payloads);
+      $snapResponse = \Midtrans\Snap::createTransaction($payloads);
       //$this->response->setOutput($redirUrl);
-      $this->response->setOutput($snapToken);
+      $this->response->setOutput($snapResponse->token);
     }
     catch (Exception $e) {
       $data['errors'][] = $e->getMessage();
@@ -286,8 +286,8 @@ class ControllerExtensionPaymentSnap extends Controller {
         $origin = $_POST['result_origin'];
       }
 
-      Veritrans_Config::$serverKey = $this->config->get('payment_' . $origin . '_server_key');
-      Veritrans_Config::$isProduction = $this->config->get('payment_' . $origin . '_environment') == 'production' ? true : false;
+      \Midtrans\Config::$serverKey = $this->config->get('payment_' . $origin . '_server_key');
+      \Midtrans\Config::$isProduction = $this->config->get('payment_' . $origin . '_environment') == 'production' ? true : false;
       // $redirUrl = $this->url->link('checkout/success&');
       /*$result_data = $_POST['result_data'];
       $post_response = $_POST['response'];*/    
@@ -306,7 +306,7 @@ class ControllerExtensionPaymentSnap extends Controller {
       } else if(isset($_GET['?id'])){
 
         $id = isset($_GET['?id']) ? $_GET['?id'] : null;
-        $bca_status = Veritrans_Transaction::status($id);
+        $bca_status = \Midtrans\Transaction::status($id);
         $transaction_status = null;
         $payment_type = $bca_status->payment_type;
       }
@@ -351,7 +351,7 @@ class ControllerExtensionPaymentSnap extends Controller {
           $this->response->redirect($redirUrl);
 
         }else if( $transaction_status == 'pending'){
-          $check = Veritrans_Transaction::status($response->transaction_id);
+          $check = \Midtrans\Transaction::status($response->transaction_id);
           $this->cart->clear();
           
           switch ($payment_type) {
@@ -487,12 +487,12 @@ class ControllerExtensionPaymentSnap extends Controller {
   public function payment_notification() {
     //http://your_website/index.php?route=extension/payment/snap/payment_notification
 
-    Veritrans_Config::$serverKey = $this->config->get('payment_snap_server_key');
-    Veritrans_Config::$isProduction = $this->config->get('payment_snap_environment') == 'production' ? true : false;
+    \Midtrans\Config::$serverKey = $this->config->get('payment_snap_server_key');
+    \Midtrans\Config::$isProduction = $this->config->get('payment_snap_environment') == 'production' ? true : false;
     $this->earlyResponse();
     $this->load->model('checkout/order');
     $this->load->model('extension/payment/snap');
-    $notif = new Veritrans_Notification();
+    $notif = new \Midtrans\Notification();
     //error_log(print_r($notif,TRUE));
     $order_note = "Midtrans HTTP notification received. ";
     $transaction = $notif->transaction_status;

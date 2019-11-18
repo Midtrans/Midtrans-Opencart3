@@ -18,7 +18,7 @@ status code
 */
 
 require_once(dirname(__FILE__) . '/snap_midtrans_version.php');
-require_once(DIR_SYSTEM . 'library/veritrans-php/Veritrans.php');
+require_once(DIR_SYSTEM . 'library/midtrans-php/Midtrans.php');
 
 class ControllerExtensionPaymentSnapio extends Controller {
 
@@ -214,9 +214,9 @@ class ControllerExtensionPaymentSnapio extends Controller {
       $item_details[] = $coupon_item;
     }
 
-    Veritrans_Config::$serverKey = $this->config->get('payment_snapio_server_key');
-    Veritrans_Config::$isProduction = $this->config->get('payment_snapio_environment') == 'production' ? true : false;
-    Veritrans_Config::$isSanitized = true;
+    \Midtrans\Config::$serverKey = $this->config->get('payment_snapio_server_key');
+    \Midtrans\Config::$isProduction = $this->config->get('payment_snapio_environment') == 'production' ? true : false;
+    \Midtrans\Config::$isSanitized = true;
 
     $payloads = array();
     $payloads['transaction_details'] = $transaction_details;
@@ -255,9 +255,9 @@ class ControllerExtensionPaymentSnapio extends Controller {
 
     try {
       // error_log(print_r($payloads,TRUE));
-      $snapToken = Veritrans_Snap::getSnapToken($payloads);
+      $snapResponse = \Midtrans\Snap::createTransaction($payloads);
       //$this->response->setOutput($redirUrl);
-      $this->response->setOutput($snapToken);
+      $this->response->setOutput($snapResponse->token);
     }
     catch (Exception $e) {
       $data['errors'][] = $e->getMessage();
