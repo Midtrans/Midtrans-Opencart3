@@ -1,3 +1,3 @@
 <?php
 // Version
-define('OC3_MIDTRANS_PLUGIN_VERSION', '2.0.2');
+define('OC3_MIDTRANS_PLUGIN_VERSION', '2.1.0');
