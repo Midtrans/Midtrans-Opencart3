@@ -96,7 +96,8 @@ class ControllerExtensionPaymentSnap extends Controller {
       'payment_snap_custom_field1',
       'payment_snap_custom_field2',
       'payment_snap_custom_field3',
-      'payment_snap_mixpanel'
+      'payment_snap_mixpanel',
+      'payment_snap_redirect'
     );
 
     foreach ($inputs as $input) {

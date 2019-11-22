@@ -49,6 +49,7 @@ class ControllerExtensionPaymentSnapinst extends Controller {
     $data['mtplugin_version'] = OC3_MIDTRANS_PLUGIN_VERSION;
 
     $data['disable_mixpanel'] = $this->config->get('payment_snapinst_mixpanel');
+    $data['redirect'] = $this->config->get('payment_snapinst_redirect');
 
     return $this->load->view('extension/payment/snapinst', $data);
       
@@ -252,10 +253,14 @@ class ControllerExtensionPaymentSnapinst extends Controller {
     if(!empty($this->config->get('payment_snapinst_custom_field3'))){ $payloads['custom_field3'] = $this->config->get('payment_snapinst_custom_field3');}
 
     try {
-      // error_log(print_r($payloads,TRUE));
-      $snapResponse = \Midtrans\Snap::createTransaction($payloads);      
+      $snapResponse = \Midtrans\Snap::createTransaction($payloads);
       //$this->response->setOutput($redirUrl);
-      $this->response->setOutput($snapResponse->token);
+      if ($this->config->get('payment_snapinst_redirect') == 1) {
+        $this->response->setOutput($snapResponse->redirect_url);
+      }
+      else {
+        $this->response->setOutput($snapResponse->token);
+      }
     }
     catch (Exception $e) {
       $data['errors'][] = $e->getMessage();

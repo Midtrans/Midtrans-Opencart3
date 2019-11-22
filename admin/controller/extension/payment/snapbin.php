@@ -99,7 +99,8 @@ class ControllerExtensionPaymentSnapbin extends Controller {
       'payment_snapbin_mixpanel',
       'payment_snapbin_currency_conversion',
       'payment_snapbin_geo_zone_id',
-      'payment_snapbin_sort_order'
+      'payment_snapbin_sort_order',
+      'payment_snapbin_redirect'
     );
 
     foreach ($inputs as $input) {

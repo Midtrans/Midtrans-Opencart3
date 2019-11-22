@@ -32,6 +32,7 @@ $_['entry_failure_mapping'] = 'Failure Order Status';
 $_['entry_status_failed'] = 'Failure Order Status';
 $_['entry_status_success'] = 'Success Order Status';
 $_['entry_display_name'] = 'Display name:';
+$_['entry_redirect'] = 'Redirect Payment Page';
 
 // Help
 $_['help_pending_mapping'] = 'Change to the following order status once the payment pending';
@@ -39,6 +40,7 @@ $_['help_failure_mapping'] = 'Change to the following order status once the paym
 $_['help_success_mapping'] = 'Change to the following order status once the payment success';
 $_['help_min'] = 'Minimum amount of transaction.';
 $_['help_custom_field'] = 'This will allow you to set custom fields that will be displayed on Midtrans dashboard.';
+$_['help_redirect'] = 'This will redirect customer to Midtrans hosted payment page instead of popup payment page on your website.';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify Snap Online Installment!';

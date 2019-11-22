@@ -99,7 +99,8 @@ class ControllerExtensionPaymentSnapinst extends Controller {
       'payment_snapinst_custom_field1',
       'payment_snapinst_custom_field2',
       'payment_snapinst_custom_field3',
-      'payment_snapinst_mixpanel'
+      'payment_snapinst_mixpanel',
+      'payment_snapinst_redirect'
     );
 
     foreach ($inputs as $input) {

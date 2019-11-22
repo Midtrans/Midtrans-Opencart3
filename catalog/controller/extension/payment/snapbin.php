@@ -48,6 +48,7 @@ class ControllerExtensionPaymentSnapbin extends Controller {
     $data['mtplugin_version'] = OC3_MIDTRANS_PLUGIN_VERSION;
 
     $data['disable_mixpanel'] = $this->config->get('payment_snapbin_mixpanel');
+    $data['redirect'] = $this->config->get('payment_snapbin_redirect');
 
     return $this->load->view('extension/payment/snapbin', $data);
 
@@ -261,9 +262,14 @@ class ControllerExtensionPaymentSnapbin extends Controller {
 
       // error_log(print_r($payloads,TRUE));
     try {
-      $snapResponse = \Midtrans\Snap::createTransaction($payloads);      
+      $snapResponse = \Midtrans\Snap::createTransaction($payloads);
       //$this->response->setOutput($redirUrl);
-      $this->response->setOutput($snapResponse->token);
+      if ($this->config->get('payment_snapbin_redirect') == 1) {
+        $this->response->setOutput($snapResponse->redirect_url);
+      }
+      else {
+        $this->response->setOutput($snapResponse->token);
+      }
     }
     catch (Exception $e) {
       $data['errors'][] = $e->getMessage();
