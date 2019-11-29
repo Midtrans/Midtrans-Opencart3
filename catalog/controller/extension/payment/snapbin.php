@@ -18,7 +18,7 @@ status code
 */
 
 require_once(dirname(__FILE__) . '/snap_midtrans_version.php');
-require_once(DIR_SYSTEM . 'library/veritrans-php/Veritrans.php');
+require_once(DIR_SYSTEM . 'library/midtrans-php/Midtrans.php');
 
 class ControllerExtensionPaymentSnapbin extends Controller {
 
@@ -48,6 +48,7 @@ class ControllerExtensionPaymentSnapbin extends Controller {
     $data['mtplugin_version'] = OC3_MIDTRANS_PLUGIN_VERSION;
 
     $data['disable_mixpanel'] = $this->config->get('payment_snapbin_mixpanel');
+    $data['redirect'] = $this->config->get('payment_snapbin_redirect');
 
     return $this->load->view('extension/payment/snapbin', $data);
 
@@ -208,9 +209,9 @@ class ControllerExtensionPaymentSnapbin extends Controller {
       $item_details[] = $coupon_item;
     }
 
-    Veritrans_Config::$serverKey = $this->config->get('payment_snapbin_server_key');
-    Veritrans_Config::$isProduction = $this->config->get('payment_snapbin_environment') == 'production' ? true : false;
-    Veritrans_Config::$isSanitized = true;
+    \Midtrans\Config::$serverKey = $this->config->get('payment_snapbin_server_key');
+    \Midtrans\Config::$isProduction = $this->config->get('payment_snapbin_environment') == 'production' ? true : false;
+    \Midtrans\Config::$isSanitized = true;
 
     $payloads = array();
     $payloads['transaction_details'] = $transaction_details;
@@ -261,9 +262,14 @@ class ControllerExtensionPaymentSnapbin extends Controller {
 
       // error_log(print_r($payloads,TRUE));
     try {
-      $snapToken = Veritrans_Snap::getSnapToken($payloads);      
+      $snapResponse = \Midtrans\Snap::createTransaction($payloads);
       //$this->response->setOutput($redirUrl);
-      $this->response->setOutput($snapToken);
+      if ($this->config->get('payment_snapbin_redirect') == 1) {
+        $this->response->setOutput($snapResponse->redirect_url);
+      }
+      else {
+        $this->response->setOutput($snapResponse->token);
+      }
     }
     catch (Exception $e) {
       $data['errors'][] = $e->getMessage();

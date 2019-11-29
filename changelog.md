@@ -1,5 +1,10 @@
 # Changelog
 
+2.1.0
+-----
+- update lib to midtrans-php
+- add feature enable snap redirect
+
 2.0.2
 -----
 - add order status mapping in admin settings

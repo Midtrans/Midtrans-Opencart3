@@ -11,33 +11,8 @@
     {% endif %}
 
     <div id="content" class="{{classes}}">{{ content_top }}
-      
 
-      {% if data.payment_type == "bank_transfer" %}
-        
-        <h1>Payment has not complete yet!</h1>
-        your order has been received but has not been paid yet</br>
-        you place order with <b>{{ data.payment_method }}</b></br>
-        your va number : <b>{{ data.payment_code }}</b></br>
-        For payment instruction click <a href="{{ data.instruction }}" target="blank">here<a></br>
-
-      {% elseif data.payment_type == "echannel" %}
-
-        <h1>Payment has not complete yet!</h1>
-        your order has been received but has not been paid yet</br>
-        you place order with <b>{{ data.payment_method }}</b></br>
-        your payment code and company code : <b>{{ data.payment_code }}</b> and <b>{{ data.company_code }}</b></br>
-        For payment instruction click <a href="{{ data.instruction }}" target="blank">here<a></br>
-
-      {% elseif data.payment_type == "cstore" %}
-
-        <h1>Payment has not complete yet!</h1>
-        your order has been received but has not been paid yet</br>
-        you place order with <b>{{ data.payment_method }}</b></br>
-        your payment code : <b>{{ data.payment_code }}</b></br>
-        For payment instruction click <a href="{{ data.instruction }}" target="blank">here<a></br>
-
-      {% elseif data.payment_type == "bca_klikpay" %}
+      {% if data.payment_type == "bca_klikpay" %}
 
         <div class="container">{{content_top}}
         <h2 class="text-center">Payment Succeed!</h2>
@@ -45,8 +20,18 @@
 
       {% else %}
 
-        <h1>Thank you. Your order has been received.</h1>
+        <h1>Order received</h1>
+        <p>Thank you. Your order has been received.</p>
         you place order with <b>{{ data.payment_method }}</b></br>
+        <p>Thank you. Your order has been received.</p>
+        <p>Order Number : <strong> {{ data.order_id }} </strong></p>
+        <p>Total : <strong> {{ data.total }} </strong></p>
+        <p>Payment Method : <strong> {{ data.payment_method }} </strong></p>
+        <p>Payment Page : <a href="{{ data.comment }}" target="blank">{{ data.comment }}</a></p>
+        <div class="buttons">
+          <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        </div>
+
       {% endif %}
       
 		      

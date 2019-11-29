@@ -206,6 +206,28 @@
                     <!-- Save Card -->
 
                     <div class="form-group sensitive">
+                        <label class="col-sm-2 control-label" for="input-redirect">
+                            <span data-toggle="tooltip" title="{{ help_redirect }}">{{ entry_redirect }}</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="input-redirect" name="payment_snapbin_redirect">
+                                {% if payment_snapbin_redirect %}
+                                    <option selected="selected" value="1">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option selected="selected" value="0">{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                            <span>Leave it disabled for default!</span>
+                        </div>
+                    </div>
+                    <!-- Redirect Page -->
+
+                    <div class="form-group sensitive">
                         <label class="col-sm-2 control-label" for="input-expiry">
                             <span data-toggle="tooltip" title="{{ help_expiry }}">{{ entry_expiry }}</span>
                         </label>
