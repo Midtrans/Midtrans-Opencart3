@@ -1,5 +1,9 @@
 # Changelog
 
+2.1.1
+-----
+- fixed minor bug when Currency Conversion field is empty
+
 2.1.0
 -----
 - update lib to midtrans-php

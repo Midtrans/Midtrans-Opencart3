@@ -51,8 +51,8 @@ class ControllerExtensionPaymentSnap extends Controller {
       $data['error_client_key'] = '';
     }
 
-    if (isset($this->error['snap_currency_conversion'])) {
-      $data['error_currency_conversion'] = $this->error['snap_currency_conversion'];
+    if (isset($this->error['currency_conversion'])) {
+      $data['error_currency_conversion'] = $this->error['currency_conversion'];
     } else {
       $data['error_currency_conversion'] = '';
     }
@@ -89,7 +89,6 @@ class ControllerExtensionPaymentSnap extends Controller {
       'payment_snap_geo_zone_id',
       'payment_snap_sort_order',
       'payment_snap_3d_secure',
-      'payment_snap_currency_conversion',
       'payment_snap_status',
       'payment_snap_expiry_duration',
       'payment_snap_expiry_unit',
@@ -130,6 +129,14 @@ class ControllerExtensionPaymentSnap extends Controller {
       $data['payment_snap_status_failure'] = $this->config->get('payment_snap_status_failure');
     } else {
       $data['payment_snap_status_failure'] = '7';
+    }
+
+    if (isset($this->request->post['payment_snap_currency_conversion'])) {
+      $data['payment_snap_currency_conversion'] = $this->request->post['payment_snap_currency_conversion'];
+    } elseif ($this->config->get('payment_snap_currency_conversion')) {
+      $data['payment_snap_currency_conversion'] = $this->config->get('payment_snap_currency_conversion');
+    } else {
+      $data['payment_snap_currency_conversion'] = 1;
     }
 
     $this->load->model('localisation/order_status');
@@ -194,12 +201,8 @@ class ControllerExtensionPaymentSnap extends Controller {
       $this->error['server_key'] = $this->language->get('error_server_key');
     }
     
-    if (!$this->request->post['payment_snap_status_success']) {
-      $this->error['server_key'] = $this->language->get('error_server_key');
-    }
-
     // currency conversion to IDR
-    if (!$this->request->post['payment_snap_currency_conversion'] && !$this->currency->has('IDR'))
+    if (!$this->request->post['payment_snap_currency_conversion'])
       $this->error['currency_conversion'] = $this->language->get('error_currency_conversion');
 
     return !$this->error;

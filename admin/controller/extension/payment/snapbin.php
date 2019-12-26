@@ -51,8 +51,8 @@ class ControllerExtensionPaymentSnapbin extends Controller {
       $data['error_client_key'] = '';
     }
 
-    if (isset($this->error['snapbin_currency_conversion'])) {
-      $data['error_currency_conversion'] = $this->error['snapbin_currency_conversion'];
+    if (isset($this->error['currency_conversion'])) {
+      $data['error_currency_conversion'] = $this->error['currency_conversion'];
     } else {
       $data['error_currency_conversion'] = '';
     }
@@ -97,7 +97,6 @@ class ControllerExtensionPaymentSnapbin extends Controller {
       'payment_snapbin_custom_field2',
       'payment_snapbin_custom_field3',
       'payment_snapbin_mixpanel',
-      'payment_snapbin_currency_conversion',
       'payment_snapbin_geo_zone_id',
       'payment_snapbin_sort_order',
       'payment_snapbin_redirect'
@@ -133,6 +132,14 @@ class ControllerExtensionPaymentSnapbin extends Controller {
       $data['payment_snapbin_status_failure'] = $this->config->get('payment_snapbin_status_failure');
     } else {
       $data['payment_snapbin_status_failure'] = '7';
+    }
+
+    if (isset($this->request->post['payment_snapbin_currency_conversion'])) {
+      $data['payment_snapbin_currency_conversion'] = $this->request->post['payment_snapbin_currency_conversion'];
+    } elseif ($this->config->get('payment_snapbin_currency_conversion')) {
+      $data['payment_snapbin_currency_conversion'] = $this->config->get('payment_snapbin_currency_conversion');
+    } else {
+      $data['payment_snapbin_currency_conversion'] = 1;
     }
 
     $this->load->model('localisation/order_status');
@@ -197,7 +204,7 @@ class ControllerExtensionPaymentSnapbin extends Controller {
     }
     
     // currency conversion to IDR
-    if (!$this->request->post['payment_snapbin_currency_conversion'] && !$this->currency->has('IDR'))
+    if (!$this->request->post['payment_snapbin_currency_conversion'])
       $this->error['currency_conversion'] = $this->language->get('error_currency_conversion');
 
     return !$this->error;
