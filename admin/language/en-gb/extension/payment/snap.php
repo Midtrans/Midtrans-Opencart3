@@ -48,6 +48,6 @@ $_['error_permission']   = 'Warning: You do not have permission to modify Snap!'
 $_['error_merchant_id']	 = 'Merchant Id is required!';
 $_['error_client_key']   = 'Client Key is required!';
 $_['error_server_key']   = 'Server Key is required!';
-$_['error_currency_conversion'] = 'Currency conversion rate is required when IDR currency is not installed in the system!';
+$_['error_currency_conversion'] = 'Currency conversion rate is required';
 $_['error_display_name'] = 'Please specify a name for this payment method!';
 ?>

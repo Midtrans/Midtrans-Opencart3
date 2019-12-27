@@ -258,6 +258,11 @@
                         <div class="col-sm-10">
                             <input type="text" name="payment_snapinst_currency_conversion" value="{{ payment_snapinst_currency_conversion }}" placeholder="{{ payment_snapinst_currency_conversion }}" class="form-control"/>
                             <span>Set to 1 if your default currency is IDR.</span>
+                            {% if error_currency_conversion %}
+                                <div class="text-danger">
+                                    {{ error_currency_conversion }}
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <!-- Currency -->
