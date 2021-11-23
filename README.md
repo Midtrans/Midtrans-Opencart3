@@ -5,6 +5,10 @@ Midtrans :heart: OpenCart!
 
 This is the official Midtrans extension for the OpenCart E-commerce platform.
 
+### Live Demo
+Want to see Midtrans Magento payment plugins in action? We have some demo web-stores for Magento that you can use to try the payment journey directly, click the link below.
+* [Midtrans CMS Demo Store](https://docs.midtrans.com/en/snap/with-plugins?id=midtrans-payment-plugin-live-demonstration)
+
 ## Compatibility
 1. PHP v5.4 and higher
 2. Opencart v3.0
@@ -43,3 +47,11 @@ This is the official Midtrans extension for the OpenCart E-commerce platform.
   * **Error Redirect URL** in Settings to `http://[your shop’s homepage]/index.php?route=extension/payment/snap/landing_redir&`
 
   * **Unfinish Redirect URL** in Settings to `http://[your shop’s homepage]/index.php?route=extension/payment/snap/landing_redir&`
+
+## Get help
+* Please follow [this step by step guide](https://docs.midtrans.com/en/snap/with-plugins?id=opencart-plugin-installation-and-configuration) for complete configuration. If you have any feedback or request, please [do let us know here](https://docs.midtrans.com/en/snap/with-plugins?id=feedback-and-request).
+* [Midtrans sandbox login](https://dashboard.sandbox.midtrans.com)
+* [Midtrans production login](https://dashboard.midtrans.com)
+* [Midtrans registration](https://account.midtrans.com/register)
+* [Midtrans documentation](http://docs.midtrans.com)
+* Technical support [support@midtrans.com](mailto:support@midtrans.com)
