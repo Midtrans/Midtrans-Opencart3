@@ -6,7 +6,7 @@ Midtrans :heart: OpenCart!
 This is the official Midtrans extension for the OpenCart E-commerce platform.
 
 ### Live Demo
-Want to see Midtrans OpenCart payment extension in action? We have some demo web-stores for Magento that you can use to try the payment journey directly, click the link below.
+Want to see Midtrans OpenCart payment extension in action? We have some demo web-stores for OpenCart that you can use to try the payment journey directly, click the link below.
 * [Midtrans CMS Demo Store](https://docs.midtrans.com/en/snap/with-plugins?id=midtrans-payment-plugin-live-demonstration)
 
 ## Compatibility
